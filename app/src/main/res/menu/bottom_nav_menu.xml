@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_signin"
+        android:icon="@drawable/ic_tab_signin"
+        android:title="签到" />
+
+    <item
+        android:id="@+id/navigation_coursetable"
+        android:icon="@drawable/ic_tab_coursetable"
+        android:title="课表" />
+
+    <item
+        android:id="@+id/navigation_supervise"
+        android:icon="@drawable/ic_tab_supervise"
+        android:title="督导" />
+<!--        android:visible="false" />-->
+
+    <item
+        android:id="@+id/navigation_me"
+        android:icon="@drawable/ic_tab_me"
+        android:title="我的" />
+</menu>
