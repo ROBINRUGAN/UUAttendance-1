@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.View
 import com.amap.api.maps.AMap
 import com.amap.api.maps.MapsInitializer
+import com.amap.api.maps.model.LatLng
+import com.amap.api.maps.model.MarkerOptions
 import com.amap.api.maps.model.MyLocationStyle
 import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.Permission
@@ -74,6 +76,9 @@ class SigninFragment : BaseFragment<FragmentSigninBinding>() {
                 "onMyLocationChange: ${location.latitude} ${location.longitude}"
             )
         }
+
+        val latLng = LatLng(30.652, 120.013)
+        aMap.addMarker(MarkerOptions().position(latLng).title("教室").snippet("DefaultMarker"))
     }
 
     override fun onDestroy() {

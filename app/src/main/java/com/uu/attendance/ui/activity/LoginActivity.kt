@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.view.ViewTreeObserver
 import com.uu.attendance.databinding.ActivityLoginBinding
 
-class LoginActivity : BaseActivity<ActivityLoginBinding>() {
+class LoginActivity : BaseToolbarActivity<ActivityLoginBinding>() {
+    override fun getToolbarTitle(): String {
+        return "登录"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
