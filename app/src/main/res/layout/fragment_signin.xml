@@ -7,6 +7,7 @@
     tools:context=".ui.fragment.SigninFragment">
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp">
@@ -50,13 +51,18 @@
                 android:textColor="@color/pink"
                 android:textSize="26sp" />
 
-            <TextView
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="地图"
-                android:textSize="26sp" />
+            <com.uu.attendance.ui.view.MapContainerLayout
+                android:id="@+id/mapContainerLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <com.amap.api.maps.MapView
+                    android:id="@+id/mapView"
+                    android:layout_width="300dp"
+                    android:layout_height="300dp" />
+
+            </com.uu.attendance.ui.view.MapContainerLayout>
 
             <TextView
                 android:id="@+id/tv_location_hint"
