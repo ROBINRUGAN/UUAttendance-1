@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import com.uu.attendance.databinding.FragmentMeBinding
 import com.uu.attendance.ui.activity.LoginActivity
+import com.uu.attendance.ui.activity.RulesActivity
 
 
 class MeFragment : BaseFragment<FragmentMeBinding>() {
@@ -20,6 +21,11 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
 
         binding.ivAvatar.setOnClickListener {
             val intent = Intent(requireContext(), LoginActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.itemRule.setOnClickListener {
+            val intent = Intent(requireContext(), RulesActivity::class.java)
             startActivity(intent)
         }
     }

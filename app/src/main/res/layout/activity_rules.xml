@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_page"
+    tools:context=".ui.activity.RulesActivity">
+
+    <LinearLayout
+        android:id="@+id/ll_rules"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:background="@drawable/bg_item"
+        android:orientation="vertical"
+        android:padding="25dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:text="一、考勤"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" 1、督导进入教室进行定位点名，学生在规定时间打开UU考勤APP进行签到\n
+2、若签到按钮为绿色，则签到成功；若签到按钮为红色，则未在可签到时段内签到，即缺勤；若签到按钮为蓝色，则未签到，且当前在可签到时段\n
+3、若系统无法签到，则跟督导说明情况\n
+4、若因某些原因错过签到，记录自己在课堂上或者请假的证据（如：文字、图片）、在课程之后进行考勤申诉\n
+5、可在考勤一览，了解某课程在本月的考勤情况"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="二、请假"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" 1、若想申请请假，在请假申请处进行申请，等待审核通过，则请假成功\n
+2、若在审核未通过，但被点名了，则可请其他同学向督导进行提醒通过请假申请，或者在考勤申诉处，进行说明"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
