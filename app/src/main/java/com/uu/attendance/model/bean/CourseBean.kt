@@ -8,5 +8,5 @@ data class CourseBean(
     val status: Int,
     val timeBegin: Int,
     val timeEnd: Int,
-    val weekday: Int
+    val date: String
 )

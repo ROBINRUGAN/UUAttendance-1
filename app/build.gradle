@@ -76,10 +76,11 @@ dependencies {
     implementation 'com.geyifeng.immersionbar:immersionbar-ktx:3.2.2'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-//    implementation 'com.amap.api:location:6.3.0'
     implementation 'com.amap.api:3dmap:latest.integration'
 
     implementation 'com.github.getActivity:XXPermissions:18.2'
 
     implementation 'com.github.getActivity:Toaster:12.3'
+
+    implementation 'io.github.razerdp:BasePopup:3.2.1'
 }
