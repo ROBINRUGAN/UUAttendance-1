@@ -2,8 +2,8 @@ package com.uu.attendance.ui.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
 import com.amap.api.maps.AMap
 import com.amap.api.maps.MapsInitializer
 import com.amap.api.maps.model.LatLng
@@ -13,10 +13,14 @@ import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.hjq.toast.Toaster
+import com.uu.attendance.R
 import com.uu.attendance.databinding.FragmentSigninBinding
+import com.uu.attendance.util.LatLngUtil
 
 
 class SigninFragment : BaseFragment<FragmentSigninBinding>() {
+
+    lateinit var viewModel: SigninViewModel
 
     companion object {
         val instance: SigninFragment by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
@@ -27,6 +31,8 @@ class SigninFragment : BaseFragment<FragmentSigninBinding>() {
     private lateinit var aMap: AMap
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProvider(this).get(SigninViewModel::class.java)
 
         initMap(savedInstanceState)
 
@@ -60,6 +66,7 @@ class SigninFragment : BaseFragment<FragmentSigninBinding>() {
 
     }
 
+    @SuppressLint("SetTextI18n")
     fun initLocation() {
         val myLocationStyle = MyLocationStyle()
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_MAP_ROTATE)
@@ -71,13 +78,25 @@ class SigninFragment : BaseFragment<FragmentSigninBinding>() {
         aMap.isMyLocationEnabled = true // 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
 
         aMap.addOnMyLocationChangeListener { location ->
-            Log.d(
-                "SigninFragment",
-                "onMyLocationChange: ${location.latitude} ${location.longitude}"
-            )
+            viewModel.currentLatLng.value = LatLng(location.latitude, location.longitude)
         }
 
         val latLng = LatLng(30.652, 120.013)
+        setDestination(latLng)
+        viewModel.currentLatLng.observe(viewLifecycleOwner) {
+            val distance = LatLngUtil.getDistance(it, viewModel.destLatLng.value!!) - 20
+            if (distance > 0) {
+                binding.tvLocationHint.text = "距离签到范围还有 ${"%.1f".format(distance)} 米"
+                binding.tvLocationHint.setTextColor(resources.getColor(R.color.pink))
+            } else {
+                binding.tvLocationHint.text = "属于签到范围"
+                binding.tvLocationHint.setTextColor(resources.getColor(R.color.green))
+            }
+        }
+    }
+
+    private fun setDestination(latLng: LatLng) {
+        viewModel.destLatLng.value = latLng
         aMap.addMarker(MarkerOptions().position(latLng).title("教室").snippet("DefaultMarker"))
     }
 
