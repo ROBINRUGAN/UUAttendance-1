@@ -108,11 +108,13 @@ class SigninFragment : BaseFragment<FragmentSigninBinding>() {
     override fun onResume() {
         super.onResume()
         binding.mapView.onResume()
+        aMap.isMyLocationEnabled = true
     }
 
     override fun onPause() {
         super.onPause()
         binding.mapView.onPause()
+        aMap.isMyLocationEnabled = false
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
