@@ -83,4 +83,8 @@ dependencies {
     implementation 'com.github.getActivity:Toaster:12.3'
 
     implementation 'io.github.razerdp:BasePopup:3.2.1'
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.12'
+
+    //implementation 'me.hiten:jkcardlayout:0.1.1'
 }

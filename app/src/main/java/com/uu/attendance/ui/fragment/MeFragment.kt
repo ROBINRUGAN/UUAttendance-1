@@ -6,6 +6,7 @@ import android.view.View
 import com.uu.attendance.databinding.FragmentMeBinding
 import com.uu.attendance.ui.activity.LoginActivity
 import com.uu.attendance.ui.activity.RulesActivity
+import com.uu.attendance.ui.activity.SuperviseDetailActivity
 
 
 class MeFragment : BaseFragment<FragmentMeBinding>() {
@@ -26,6 +27,11 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
 
         binding.itemRule.setOnClickListener {
             val intent = Intent(requireContext(), RulesActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.itemExit.setOnClickListener {
+            val intent = Intent(requireContext(), SuperviseDetailActivity::class.java)
             startActivity(intent)
         }
     }

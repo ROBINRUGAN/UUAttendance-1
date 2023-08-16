@@ -1,14 +1,9 @@
 package com.uu.attendance.ui.activity
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import com.uu.attendance.R
 import com.uu.attendance.databinding.ActivityMainBinding
-import com.uu.attendance.ui.adapter.PagerAdapter
-import com.uu.attendance.ui.fragment.CourseTableFragment
-import com.uu.attendance.ui.fragment.MeFragment
-import com.uu.attendance.ui.fragment.SigninFragment
-import com.uu.attendance.ui.fragment.SuperviseFragment
+import com.uu.attendance.ui.adapter.ViewPagerMainAdapter
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,13 +13,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         val mainViewPager = binding.mainViewPager
 
         mainViewPager.isUserInputEnabled = false
-
-        val fragmentArr = ArrayList<Fragment>()
-        fragmentArr.add(SigninFragment.instance)
-        fragmentArr.add(CourseTableFragment.instance)
-        fragmentArr.add(SuperviseFragment.instance)
-        fragmentArr.add(MeFragment.instance)
-        mainViewPager.adapter = PagerAdapter(this, fragmentArr)
+        mainViewPager.adapter = ViewPagerMainAdapter(this)
+        mainViewPager.offscreenPageLimit = 4
 
         navView.itemIconTintList = null
         navView.setOnItemSelectedListener {

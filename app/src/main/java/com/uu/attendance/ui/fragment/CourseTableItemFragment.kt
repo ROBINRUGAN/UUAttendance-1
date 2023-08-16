@@ -97,7 +97,7 @@ class CourseTableItemFragment : BaseFragment<FragmentCoursetableItemBinding>() {
                     left = (viewModel.itemWidth.value!! + 5) * (weekday - 1),
                     top = (viewModel.itemHeight.value!! + 5) * (course.timeBegin - 1)
                 )
-                background = AppCompatResources.getDrawable(context, R.drawable.bg_course)
+                background = AppCompatResources.getDrawable(context, R.drawable.bg_corner_10)
                 tag = course
                 val tv = TextView(context).apply {
                     text = course.name + '\n' + course.location
@@ -118,7 +118,7 @@ class CourseTableItemFragment : BaseFragment<FragmentCoursetableItemBinding>() {
                     }
                     textSize = 13f
                     gravity = Gravity.CENTER
-                    background = AppCompatResources.getDrawable(context, R.drawable.bg_course)
+                    background = AppCompatResources.getDrawable(context, R.drawable.bg_corner_10)
                     setTextColor(
                         resources.getColor(
                             when (course.status) {

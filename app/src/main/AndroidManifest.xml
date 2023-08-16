@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
+
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -21,9 +21,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UU考勤"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.activity.SuperviseDetailActivity"
+            android:exported="false" />
+
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="cf0d94d8e27893bec7ea67db8fd643f1" />
+
         <activity
             android:name=".ui.activity.RulesActivity"
             android:exported="false" />

@@ -60,10 +60,6 @@ class SigninFragment : BaseFragment<FragmentSigninBinding>() {
         MapsInitializer.updatePrivacyAgree(context, true)
         binding.mapView.onCreate(savedInstanceState)
         aMap = binding.mapView.map
-
-        // 处理滑动事件冲突
-        binding.mapContainerLayout.setScrollView(binding.scrollView)
-
     }
 
     @SuppressLint("SetTextI18n")
