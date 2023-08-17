@@ -15,7 +15,7 @@ object CardConfig {
      */
     const val DEFAULT_SCALE = 0.1f
 
-    const val DEFAULT_ALPHA = 0.3f
+    const val DEFAULT_ALPHA = 0f
 
     /**
      * 卡片Y轴偏移量时按照14等分计算
