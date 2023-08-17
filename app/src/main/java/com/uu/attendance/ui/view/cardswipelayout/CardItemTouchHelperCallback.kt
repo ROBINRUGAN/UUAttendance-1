@@ -88,7 +88,6 @@ class CardItemTouchHelperCallback<T> : ItemTouchHelper.Callback {
         c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
         dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean
     ) {
-//        "onChildDraw".logd()
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
         val itemView = viewHolder.itemView
         if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
@@ -101,7 +100,6 @@ class CardItemTouchHelperCallback<T> : ItemTouchHelper.Callback {
             }
             itemView.rotation = ratio * CardConfig.DEFAULT_ROTATE_DEGREE
             val childCount = recyclerView.childCount
-//            "childCount:$childCount".logd()
             // 当数据源个数大于最大显示数时
             if (childCount > CardConfig.DEFAULT_SHOW_ITEM) {
                 for (position in 1 until childCount - 1) {

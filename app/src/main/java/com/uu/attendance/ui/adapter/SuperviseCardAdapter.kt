@@ -42,9 +42,11 @@ class SuperviseCardAdapter(list: MutableList<StudentBean>) :
         // todo set avatar
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun getOneMoreData() {
         val sb = StudentBean(7, "吴九", 2019210007, "", 0)
         mList.add(sb)
+        notifyDataSetChanged()  // 暂时使用notifyDataSetChanged，其他方法会导致卡片alpha突变
         // todo 网络获取
     }
 

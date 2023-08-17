@@ -8,7 +8,6 @@ import androidx.core.view.MotionEventCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Recycler
-import com.uu.attendance.util.LogUtil.Companion.logd
 
 /**
  * @author yuqirong
@@ -24,7 +23,6 @@ class CardLayoutManager(recyclerView: RecyclerView, itemTouchHelper: ItemTouchHe
     }
 
     override fun onLayoutChildren(recycler: Recycler, state: RecyclerView.State) {
-//        "onLayoutChildren".logd()
         detachAndScrapAttachedViews(recycler)
         val itemCount = itemCount
         // 当数据源个数大于最大显示数时
@@ -41,17 +39,14 @@ class CardLayoutManager(recyclerView: RecyclerView, itemTouchHelper: ItemTouchHe
                     widthSpace / 2 + getDecoratedMeasuredWidth(view),
                     heightSpace / 2 + getDecoratedMeasuredHeight(view)
                 )
-                position.logd()
                 if (position == CardConfig.DEFAULT_SHOW_ITEM) {
-                    // 和最后一个重叠，不可见
+                    // 和最后一个重叠
                     view.scaleX = 1 - (position - 1) * CardConfig.DEFAULT_SCALE
                     view.scaleY = 1 - (position - 1) * CardConfig.DEFAULT_SCALE
                     view.translationY =
                         ((position - 1) * view.measuredHeight / CardConfig.DEFAULT_TRANSLATE_Y).toFloat()
-                    view.translationX = ((position - 1) * view.measuredWidth / CardConfig.DEFAULT_TRANSLATE_X).toFloat()//+20f
+                    view.translationX = ((position - 1) * view.measuredWidth / CardConfig.DEFAULT_TRANSLATE_X).toFloat()
                     view.alpha = 1 - (position - 1) * CardConfig.DEFAULT_ALPHA
-                    // todo 最后一项的alpha会突变为1
-//                    "position == CardConfig.DEFAULT_SHOW_ITEM".logd()
                 } else if (position > 0) {
                     view.scaleX = 1 - position * CardConfig.DEFAULT_SCALE
                     view.scaleY = 1 - position * CardConfig.DEFAULT_SCALE
