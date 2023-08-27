@@ -1,4 +1,4 @@
-package com.uu.attendance.ui.activity
+package com.uu.attendance.base.ui
 
 import android.os.Bundle
 import android.view.MenuItem

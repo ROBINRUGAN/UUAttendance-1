@@ -2,6 +2,7 @@ package com.uu.attendance.ui.activity
 
 import android.os.Bundle
 import android.view.View
+import com.uu.attendance.base.ui.BaseToolbarActivity
 import com.uu.attendance.databinding.ActivityRulesBinding
 
 class RulesActivity : BaseToolbarActivity<ActivityRulesBinding>() {

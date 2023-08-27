@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.hjq.toast.Toaster
+import com.uu.attendance.base.ui.BaseFragment
 import com.uu.attendance.databinding.FragmentSuperviseCardBinding
 import com.uu.attendance.model.bean.StudentBean
 import com.uu.attendance.ui.activity.SuperviseViewModel

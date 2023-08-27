@@ -3,6 +3,7 @@ package com.uu.attendance.ui.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import com.uu.attendance.base.ui.BaseFragment
 import com.uu.attendance.databinding.FragmentSuperviseListBinding
 import com.uu.attendance.ui.activity.SuperviseViewModel
 import com.uu.attendance.util.KeyboardUtil

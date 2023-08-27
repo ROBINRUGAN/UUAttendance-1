@@ -1,13 +1,23 @@
 package com.uu.attendance.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import com.uu.attendance.R
+import com.uu.attendance.base.ui.BaseActivity
 import com.uu.attendance.databinding.ActivityMainBinding
 import com.uu.attendance.ui.adapter.ViewPagerMainAdapter
+import com.uu.attendance.util.KVUtil
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (KVUtil.get("token", "") == "") {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+            return
+        }
 
         val navView = binding.navView
         val mainViewPager = binding.mainViewPager

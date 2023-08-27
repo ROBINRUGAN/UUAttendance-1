@@ -3,6 +3,7 @@ package com.uu.attendance.ui.activity
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import com.uu.attendance.base.ui.BaseToolbarActivity
 import com.uu.attendance.databinding.ActivitySuperviseDetailBinding
 import com.uu.attendance.ui.adapter.ViewPagerSuperviseDetailAdapter
 
@@ -26,7 +27,7 @@ class SuperviseDetailActivity : BaseToolbarActivity<ActivitySuperviseDetailBindi
         binding.vp2.isUserInputEnabled = false
         binding.vp2.offscreenPageLimit = 2
 
-        binding.vp2.currentItem = 1  // debug
+//        binding.vp2.currentItem = 1  // debug
 
         viewModel.isSearch.observe(this) {
             if (it) {

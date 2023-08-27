@@ -9,6 +9,7 @@ import android.view.ViewTreeObserver
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import com.uu.attendance.base.ui.BaseFragment
 import com.uu.attendance.databinding.FragmentCoursetableBinding
 import com.uu.attendance.model.bean.CourseBean
 import com.uu.attendance.ui.adapter.CourseTableAdapter

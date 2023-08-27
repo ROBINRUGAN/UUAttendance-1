@@ -14,6 +14,7 @@ import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.hjq.toast.Toaster
 import com.uu.attendance.R
+import com.uu.attendance.base.ui.BaseFragment
 import com.uu.attendance.databinding.FragmentSigninBinding
 import com.uu.attendance.util.LatLngUtil
 

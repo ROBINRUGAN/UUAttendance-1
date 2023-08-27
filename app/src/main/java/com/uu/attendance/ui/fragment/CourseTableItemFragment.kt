@@ -13,6 +13,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.updateMargins
 import androidx.lifecycle.ViewModelProvider
 import com.uu.attendance.R
+import com.uu.attendance.base.ui.BaseFragment
 import com.uu.attendance.databinding.FragmentCoursetableItemBinding
 import com.uu.attendance.model.bean.CourseBean
 import com.uu.attendance.ui.view.CourseDetailPopup

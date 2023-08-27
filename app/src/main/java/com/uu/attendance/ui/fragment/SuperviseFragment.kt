@@ -2,6 +2,7 @@ package com.uu.attendance.ui.fragment
 
 import android.os.Bundle
 import android.view.View
+import com.uu.attendance.base.ui.BaseFragment
 import com.uu.attendance.databinding.FragmentSuperviseBinding
 
 
