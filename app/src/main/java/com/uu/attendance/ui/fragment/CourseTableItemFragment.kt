@@ -33,8 +33,8 @@ class CourseTableItemFragment : BaseFragment<FragmentCoursetableItemBinding>() {
 
         viewModel.currentWeek.observe(viewLifecycleOwner) {
             if (fragmentWeek == viewModel.currentWeek.value) {
-                initHeader(viewModel.courseList.value?.get(fragmentWeek))
-                initBody(viewModel.courseList.value?.get(fragmentWeek))
+//                initHeader(viewModel.courseList.value?.get(fragmentWeek))
+//                initBody(viewModel.courseList.value?.get(fragmentWeek))
             }
         }
 

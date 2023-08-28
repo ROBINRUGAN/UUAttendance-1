@@ -14,8 +14,8 @@
     <item
         android:id="@+id/navigation_supervise"
         android:icon="@drawable/ic_tab_supervise"
-        android:title="督导" />
-<!--        android:visible="false" />-->
+        android:title="督导"
+        android:visible="false" />
 
     <item
         android:id="@+id/navigation_me"

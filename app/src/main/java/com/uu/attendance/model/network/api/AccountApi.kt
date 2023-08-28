@@ -1,6 +1,7 @@
 package com.uu.attendance.model.network.api
 
 import com.uu.attendance.model.network.RetrofitProvider
+import com.uu.attendance.model.network.dto.LoginDto
 import com.uu.attendance.model.network.service.AccountService
 
 object AccountApi {
@@ -12,14 +13,11 @@ object AccountApi {
 
     suspend fun getInfo() = accountService.getInfo()
 
+    suspend fun authenticate() = accountService.authenticate()
 
 
 
-    data class LoginDto(
-        val no: String,
-        val password: String
-    )
-    data class TokenLoginDto(
-        val token: String
-    )
+
+
+
 }

@@ -2,11 +2,15 @@ package com.uu.attendance.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import com.hjq.toast.Toaster
 import com.uu.attendance.R
 import com.uu.attendance.base.ui.BaseActivity
 import com.uu.attendance.databinding.ActivityMainBinding
+import com.uu.attendance.model.Identity
+import com.uu.attendance.model.network.api.AccountApi
 import com.uu.attendance.ui.adapter.ViewPagerMainAdapter
 import com.uu.attendance.util.KVUtil
+import com.uu.attendance.util.LogUtil.Companion.debug
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,5 +51,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
             true
         }
+
+        switchSuperviseVisibility()
+        launch(tryBlock = {
+            val identity = AccountApi.authenticate()
+            KVUtil.put("identity", identity)
+            switchSuperviseVisibility()
+        }, catchBlock = {
+            debug(it)
+            Toaster.show("获取用户信息异常，请重新登录")
+            KVUtil.put("identity", Identity.STUDENT)
+            switchSuperviseVisibility()
+        })
+    }
+
+    private fun switchSuperviseVisibility() {
+        binding.navView.menu.findItem(R.id.navigation_supervise).isVisible =
+            KVUtil.get("identity", Identity.STUDENT) == Identity.SUPERVISER
     }
 }

@@ -7,7 +7,9 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.hjq.toast.Toaster
 import com.uu.attendance.base.ui.BaseFragment
 import com.uu.attendance.databinding.FragmentMeBinding
+import com.uu.attendance.model.Identity
 import com.uu.attendance.model.network.api.AccountApi
+import com.uu.attendance.ui.activity.LeaveApplicationActivity
 import com.uu.attendance.ui.activity.LoginActivity
 import com.uu.attendance.ui.activity.RulesActivity
 import com.uu.attendance.util.KVUtil
@@ -27,6 +29,11 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
 
         binding.ivAvatar.setOnClickListener {
             val intent = Intent(requireContext(), LoginActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.itemLeaveapply.setOnClickListener {
+            val intent = Intent(requireContext(), LeaveApplicationActivity::class.java)
             startActivity(intent)
         }
 
@@ -67,6 +74,14 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
             })
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.identity.text = when (KVUtil.get("identity", Identity.STUDENT)) {
+            Identity.STUDENT -> "学生"
+            else -> "督导"
+        }
     }
 
 

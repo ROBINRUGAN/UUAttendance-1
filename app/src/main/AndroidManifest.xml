@@ -23,6 +23,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="34">
         <activity
+            android:name=".ui.activity.LeaveApplicationActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activity.SuperviseDetailActivity"
             android:exported="false" />
 
@@ -39,7 +42,7 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:exported="true"
-            android:launchMode="singleInstance">
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
