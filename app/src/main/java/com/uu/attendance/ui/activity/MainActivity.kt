@@ -55,7 +55,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         switchSuperviseVisibility()
         launch(tryBlock = {
             val identity = AccountApi.authenticate()
-            KVUtil.put("identity", identity)
+            KVUtil.put("identity", identity.data!!)
             switchSuperviseVisibility()
         }, catchBlock = {
             debug(it)
