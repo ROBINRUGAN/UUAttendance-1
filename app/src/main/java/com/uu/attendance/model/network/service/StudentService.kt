@@ -15,6 +15,6 @@ interface StudentService {
         @Query("semester") semester: Int
     ): BaseDto<List<CourseDto>>
 
-    @GET("leaves/students")
+    @GET("leaves/student")
     suspend fun getLeaveApplicationList(): BaseDto<List<LeaveApplicationInfoDto>>
 }
