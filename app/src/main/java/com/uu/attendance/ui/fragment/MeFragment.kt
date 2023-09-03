@@ -9,6 +9,7 @@ import com.uu.attendance.base.ui.BaseFragment
 import com.uu.attendance.databinding.FragmentMeBinding
 import com.uu.attendance.model.Identity
 import com.uu.attendance.model.network.api.AccountApi
+import com.uu.attendance.ui.activity.AttendanceAppealActivity
 import com.uu.attendance.ui.activity.LeaveApplicationActivity
 import com.uu.attendance.ui.activity.LoginActivity
 import com.uu.attendance.ui.activity.RulesActivity
@@ -34,6 +35,11 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
 
         binding.itemLeaveapply.setOnClickListener {
             val intent = Intent(requireContext(), LeaveApplicationActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.itemAppeal.setOnClickListener {
+            val intent = Intent(requireContext(), AttendanceAppealActivity::class.java)
             startActivity(intent)
         }
 

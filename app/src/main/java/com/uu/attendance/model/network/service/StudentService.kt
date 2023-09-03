@@ -1,6 +1,7 @@
 package com.uu.attendance.model.network.service
 
 import com.uu.attendance.base.dto.BaseDto
+import com.uu.attendance.model.network.dto.AttendanceAppealInfoDto
 import com.uu.attendance.model.network.dto.CourseTableDto
 import com.uu.attendance.model.network.dto.LeaveApplicationInfoDto
 import retrofit2.http.GET
@@ -17,4 +18,8 @@ interface StudentService {
 
     @GET("leaves/student")
     suspend fun getLeaveApplicationList(): BaseDto<List<LeaveApplicationInfoDto>>
+
+    @GET("attendanceAppeals/student")
+    suspend fun getAttendanceAppealList(): BaseDto<List<AttendanceAppealInfoDto>>
+
 }

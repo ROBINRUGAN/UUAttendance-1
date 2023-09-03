@@ -11,4 +11,6 @@ object StudentApi {
     suspend fun getCourseTable(week: Int, year: Int, semester: Int) = studentService.getCourseTable(week, year, semester)
 
     suspend fun getLeaveApplicationList() = studentService.getLeaveApplicationList()
+
+    suspend fun getAttendanceAppealList() = studentService.getAttendanceAppealList()
 }
