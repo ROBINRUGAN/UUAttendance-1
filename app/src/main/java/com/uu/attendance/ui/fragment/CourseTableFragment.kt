@@ -64,20 +64,14 @@ class CourseTableFragment : BaseFragment<FragmentCoursetableBinding>() {
     private fun initViewPager() {
         viewModel.itemWidth.value = binding.vpTable.width / 7 - 5
 
-//        val observer = {
-//            launch(tryBlock = {
-//                viewModel.courseList.value = StudentApi.getCourseTable(
-//                    viewModel.currentWeek.value!!,
-//                    viewModel.currentYear.value!!,
-//                    viewModel.currentSemester.value!!
-//                ).data
-//            }, catchBlock = {
-//                debug(it)
-//                Toaster.show("获取课表失败")
-//            })
-//
-//        }
-//        viewModel.currentMonth.observe(this, observer)
+
+        viewModel.currentWeek.observe(this) {
+            launch(tryBlock = {
+                viewModel.getCourseTable()
+            }, finallyBlock = {
+//                Toaster.show("课表加载完成")
+            })
+        }
 
 
 //        viewModel.courseList.value = mapOf(
