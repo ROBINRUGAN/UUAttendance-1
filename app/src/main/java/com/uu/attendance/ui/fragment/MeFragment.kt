@@ -56,6 +56,11 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
                 .setMessage("确定退出登录吗？")
                 .setNegativeButton("取消", null)
                 .setPositiveButton("确定") { dialog, _ ->
+                    launch(tryBlock = {
+                        AccountApi.logout()
+                    }, catchBlock = {
+                        debug(it)
+                    })
                     KVUtil.put("token", "")
                     Toaster.show("已退出登录")
                     val intent = Intent(requireContext(), LoginActivity::class.java)

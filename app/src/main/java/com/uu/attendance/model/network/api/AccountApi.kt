@@ -11,6 +11,8 @@ object AccountApi {
 
     suspend fun login(username: String, password: String) = accountService.login(LoginDto(username, password))
 
+    suspend fun logout() = accountService.logout()
+
     suspend fun getInfo() = accountService.getInfo()
 
     suspend fun authenticate() = accountService.authenticate()
