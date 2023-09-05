@@ -70,7 +70,7 @@ object RetrofitProvider {
             .cache(cache)
     }
 
-    private const val BASE_URL = "http://8.130.128.255:9090/"
+    private const val BASE_URL = "http://111.229.173.12:9090/"
 //    private val retrofit = Retrofit.Builder()
 //        .baseUrl(BASE_URL)
 //        .client(getClient().build())
