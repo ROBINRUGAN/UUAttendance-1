@@ -10,6 +10,7 @@ import com.uu.attendance.ui.adapter.ViewPagerSuperviseDetailAdapter
 class SuperviseDetailActivity : BaseToolbarActivity<ActivitySuperviseDetailBinding>() {
 
     lateinit var viewModel: SuperviseViewModel
+    private var courseId: Int = -1
     override fun getToolbarTitle(): String {
         return "督导详情"
     }
@@ -20,6 +21,12 @@ class SuperviseDetailActivity : BaseToolbarActivity<ActivitySuperviseDetailBindi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        courseId = intent.getIntExtra("courseId", -1)
+        if (courseId == -1) {
+            finish()
+            return
+        }
 
         viewModel = ViewModelProvider(this).get(SuperviseViewModel::class.java)
 

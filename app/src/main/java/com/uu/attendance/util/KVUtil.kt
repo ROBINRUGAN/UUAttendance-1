@@ -1,6 +1,7 @@
 package com.uu.attendance.util
 
 import com.tencent.mmkv.MMKV
+import com.uu.attendance.util.LogUtil.Companion.debug
 
 object KVUtil {
     private val mmkv by lazy { MMKV.defaultMMKV() }
@@ -15,6 +16,7 @@ object KVUtil {
             is ByteArray -> mmkv.encode(key, value)
             else -> throw IllegalArgumentException("Unsupported type.")
         }
+        debug("put: $key=$value")
     }
 
     @Suppress("UNCHECKED_CAST")

@@ -6,20 +6,20 @@ import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
 import android.widget.TextView
 import com.uu.attendance.R
-import com.uu.attendance.model.network.dto.CourseTableDto
+import com.uu.attendance.model.network.dto.CourseDetailDto
 import razerdp.basepopup.BasePopupWindow
 
 @SuppressLint("SetTextI18n")
-class CourseDetailPopup(context: Context, course: CourseTableDto, currentWeek: Int) :
+class CourseDetailPopup(context: Context, course: CourseDetailDto, currentWeek: Int) :
     BasePopupWindow(context) {
 
     init {
         setContentView(R.layout.popup_course_detail)
-        findViewById<TextView>(R.id.tv_name).text = course.courseDetail.name
+        findViewById<TextView>(R.id.tv_name).text = course.name
         findViewById<TextView>(R.id.tv_teacher).text = course.teacherName
-        findViewById<TextView>(R.id.tv_location).text = course.courseDetail.place
+        findViewById<TextView>(R.id.tv_location).text = course.place
         findViewById<TextView>(R.id.tv_time).text =
-            course.courseDetail.sectionStart.toString() + "-" + course.courseDetail.sectionEnd.toString() + "节"
+            course.sectionStart.toString() + "-" + course.sectionEnd.toString() + "节"
         findViewById<TextView>(R.id.tv_week).text = "第${currentWeek}周"
     }
 

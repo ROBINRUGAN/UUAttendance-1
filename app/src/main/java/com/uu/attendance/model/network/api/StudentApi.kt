@@ -8,9 +8,11 @@ object StudentApi {
         RetrofitProvider.getRetrofit(true).create(StudentService::class.java)
     }
 
-    suspend fun getCourseTable(week: Int, year: Int, semester: Int) = studentService.getCourseTable(week, year, semester)
+    suspend fun getCourseTable(week: Int, semester: Int) = studentService.getCourseTable(week, semester)
 
     suspend fun getLeaveApplicationList() = studentService.getLeaveApplicationList()
 
     suspend fun getAttendanceAppealList() = studentService.getAttendanceAppealList()
+
+    suspend fun getSemesterAndSchoolOpenTime() = studentService.getSemesterAndSchoolOpenTime()
 }

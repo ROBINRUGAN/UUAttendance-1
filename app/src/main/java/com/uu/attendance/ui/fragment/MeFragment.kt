@@ -62,6 +62,7 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
                         debug(it)
                     })
                     KVUtil.put("token", "")
+                    KVUtil.put("id", -1)
                     Toaster.show("已退出登录")
                     val intent = Intent(requireContext(), LoginActivity::class.java)
                     startActivity(intent)

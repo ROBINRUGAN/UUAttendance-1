@@ -69,7 +69,9 @@ dependencies {
     // network
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.11.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.11.0'
+//    implementation 'org.java-websocket:Java-WebSocket:1.5.3'
 
     // ui
     implementation 'com.google.android.material:material:1.9.0'
@@ -80,6 +82,7 @@ dependencies {
     implementation 'io.github.razerdp:BasePopup:3.2.1'
     implementation 'com.geyifeng.immersionbar:immersionbar:3.2.2'
     implementation 'com.geyifeng.immersionbar:immersionbar-ktx:3.2.2'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     //implementation 'me.hiten:jkcardlayout:0.1.1'
 
     // data

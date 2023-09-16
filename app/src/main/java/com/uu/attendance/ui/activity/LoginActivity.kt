@@ -59,6 +59,7 @@ class LoginActivity : BaseToolbarActivity<ActivityLoginBinding>() {
                         debug(it)
 //                        Toaster.show(loginResult.msg)
                         KVUtil.put("token", it.token)
+                        KVUtil.put("id", it.id)
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
                         startActivity(intent)
                         finish()

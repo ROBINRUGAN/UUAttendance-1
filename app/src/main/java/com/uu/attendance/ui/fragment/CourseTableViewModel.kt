@@ -4,17 +4,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.hjq.toast.Toaster
 import com.uu.attendance.model.network.api.StudentApi
-import com.uu.attendance.model.network.dto.CourseTableDto
+import com.uu.attendance.model.network.dto.CourseDetailDto
 import com.uu.attendance.util.LogUtil.Companion.debug
+import java.util.Date
 
 class CourseTableViewModel : ViewModel() {
-    val currentYear = MutableLiveData(2022)
     val currentWeek = MutableLiveData(1)
-    val currentSemester = MutableLiveData(1)
+    val currentSemester = MutableLiveData(202301)
     val currentMonth = MutableLiveData(1)   // 赋初值1，避免展示出现null使体验不佳
+    val schoolOpenTime = MutableLiveData<Date>() // 本学期开学时间
 
     //    val courseList = MutableLiveData<Map<Int, List<CourseBean>>>()
-    val courseList = MutableLiveData<List<CourseTableDto>>()
+    val courseList = mutableMapOf<Int, List<CourseDetailDto>?>()
 
     val itemHeight = MutableLiveData<Int>()
     val itemWidth = MutableLiveData<Int>()
@@ -29,13 +30,14 @@ class CourseTableViewModel : ViewModel() {
 //        }
     }
 
-    suspend fun getCourseTable() {
+    suspend fun getCourseTable(week:Int) {
         try {
-            courseList.value = StudentApi.getCourseTable(
-                currentWeek.value!!,
-                currentYear.value!!,
-                currentSemester.value!!
-            ).data
+            courseList[week] = (
+                    StudentApi.getCourseTable(
+                        currentWeek.value!!,
+                        currentSemester.value!!
+                    ).data)
+//            debug(courseList.toString())
         } catch (e: Exception) {
             debug(e)
             Toaster.show("获取课表失败")

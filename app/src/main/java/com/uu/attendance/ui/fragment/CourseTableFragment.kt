@@ -9,9 +9,14 @@ import android.view.ViewTreeObserver
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import com.hjq.toast.Toaster
 import com.uu.attendance.base.ui.BaseFragment
 import com.uu.attendance.databinding.FragmentCoursetableBinding
+import com.uu.attendance.model.network.api.StudentApi
 import com.uu.attendance.ui.adapter.CourseTableAdapter
+import java.sql.Date
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 
 class CourseTableFragment : BaseFragment<FragmentCoursetableBinding>() {
@@ -65,70 +70,32 @@ class CourseTableFragment : BaseFragment<FragmentCoursetableBinding>() {
         viewModel.itemWidth.value = binding.vpTable.width / 7 - 5
 
 
-        viewModel.currentWeek.observe(this) {
-            launch(tryBlock = {
-                viewModel.getCourseTable()
-            }, finallyBlock = {
-//                Toaster.show("课表加载完成")
-            })
-        }
-
-
-//        viewModel.courseList.value = mapOf(
-//            Pair(
-//                4, listOf(
-//                    CourseBean(
-//                        1,
-//                        "高等数学",
-//                        "awa",
-//                        "教学楼",
-//                        2,
-//                        1,
-//                        2,
-//                        "2023-08-14",
-//                    ),
-//                    CourseBean(
-//                        2,
-//                        "高等s学",
-//                        "aawa",
-//                        "教学楼",
-//                        3,
-//                        2,
-//                        5,
-//                        "2023-08-16",
-//                    ),
-//                    CourseBean(
-//                        3,
-//                        "高b数学",
-//                        "awwa",
-//                        "教学楼",
-//                        0,
-//                        6,
-//                        7,
-//                        "2023-08-18",
-//                    ),
-//                    CourseBean(
-//                        4,
-//                        "高等数学",
-//                        "awa",
-//                        "教学楼",
-//                        1,
-//                        7,
-//                        10,
-//                        "2023-08-20",
-//                    ),
-//                )
-//            )
-//        )
-        binding.vpTable.adapter = CourseTableAdapter(this)
-        binding.vpTable.offscreenPageLimit = 1
-        binding.vpTable.registerOnPageChangeCallback(object :
-            androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-
-                viewModel.currentWeek.value = position + 1
+        launch(tryBlock = {
+            StudentApi.getSemesterAndSchoolOpenTime().data!!.let {
+                viewModel.currentSemester.value = it.semester.toInt()
+                val formatter = SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.CHINA)
+                viewModel.schoolOpenTime.value = Date(java.util.Calendar.getInstance().apply {
+                    time = formatter.parse(it.schoolOpenTime)!!
+                }.timeInMillis)
             }
+        }, catchBlock = {
+            it.printStackTrace()
+            Toaster.show("获取学期信息失败")
+        }, finallyBlock = {
+
+            binding.vpTable.adapter = CourseTableAdapter(this@CourseTableFragment)
+            binding.vpTable.offscreenPageLimit = 1
+            binding.vpTable.registerOnPageChangeCallback(object :
+                androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+
+                    viewModel.currentWeek.value = position + 1
+                }
+            })
+
         })
+
+
     }
 }

@@ -15,55 +15,50 @@ import androidx.lifecycle.ViewModelProvider
 import com.uu.attendance.R
 import com.uu.attendance.base.ui.BaseFragment
 import com.uu.attendance.databinding.FragmentCoursetableItemBinding
-import com.uu.attendance.model.network.dto.CourseTableDto
+import com.uu.attendance.model.network.dto.CourseDetailDto
 import com.uu.attendance.ui.view.CourseDetailPopup
 import com.uu.attendance.util.ConvertUtil.Companion.dp
 
-class CourseTableItemFragment : BaseFragment<FragmentCoursetableItemBinding>() {
+class CourseTableItemFragment(private val week: Int) :
+    BaseFragment<FragmentCoursetableItemBinding>() {
 
     private lateinit var viewModel: CourseTableViewModel
-    private var fragmentWeek: Int = 0
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(requireActivity()).get(CourseTableViewModel::class.java)
         binding.viewModel = viewModel
 
-        viewModel.currentWeek.observe(viewLifecycleOwner) {
-            if (fragmentWeek == viewModel.currentWeek.value) {
-                initHeader(viewModel.courseList.value)
-                initBody(viewModel.courseList.value)
-            }
-        }
+        launch(tryBlock = {
+            viewModel.getCourseTable(week)
+        }, catchBlock = {
+            it.printStackTrace()
+        }, finallyBlock = {
+            initHeader(viewModel.courseList[week])
+            initBody(viewModel.courseList[week])
+        })
 
     }
 
     @SuppressLint("SetTextI18n")
-    private fun initHeader(courseBeans: List<CourseTableDto>?) {
-        if (courseBeans.isNullOrEmpty()) return
-        // 无课就不绘制顶部了
+    private fun initHeader(courseBeans: List<CourseDetailDto>?) {
         binding.llHeader.removeAllViews()
         val weekdays = listOf("一", "二", "三", "四", "五", "六", "日")
-//        val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.CHINA)
-//        var date = formatter.parse(courseBeans.first().date)!!
-//        var calendar = java.util.Calendar.getInstance().apply { time = date }
-//        var weekday = calendar.get(java.util.Calendar.DAY_OF_WEEK) - 1
-//        if (weekday == 0) weekday = 7
-//        date = java.util.Date(date.time + (1 - weekday) * 24 * 60 * 60 * 1000)
-//        calendar = java.util.Calendar.getInstance().apply { time = date }
-
-        // 左上角月份
-//        viewModel.currentMonth.value = calendar.get(java.util.Calendar.MONTH) + 1
-        courseBeans.first().courseDetail.month.let {
-            viewModel.currentMonth.value = it
-        }
 
         val headerList: MutableList<TextView> = mutableListOf()
         for (i in 1..7) {
-//            val currentDate = java.util.Date(date.time + (i - 1) * 24 * 60 * 60 * 1000)
+            val distance = (week - 1) * 7 + i - 1
+            val date =
+                java.util.Date(viewModel.schoolOpenTime.value!!.time + distance * 24 * 60 * 60 * 1000)
+            val calendar = java.util.Calendar.getInstance().apply { time = date }
+            if (i == 1) {
+                // 左上角月份
+                viewModel.currentMonth.value = calendar.get(java.util.Calendar.MONTH) + 1
+
+            }
             val tv = TextView(context).apply {
                 text =
-                    weekdays[i - 1] + '\n' + courseBeans[i - 1].courseDetail.day //currentDate.date.toString()
+                    weekdays[i - 1] + '\n' + date.date.toString()
                 textSize = 18f
                 setTextColor(resources.getColor(android.R.color.black))
                 gravity = Gravity.CENTER
@@ -81,41 +76,27 @@ class CourseTableItemFragment : BaseFragment<FragmentCoursetableItemBinding>() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun initBody(courseBeans: List<CourseTableDto>?) {
+    private fun initBody(courseBeans: List<CourseDetailDto>?) {
+//        debug(courseBeans.toString())
         if (courseBeans.isNullOrEmpty()) return
         binding.flBody.removeAllViews()
         courseBeans.forEach { course ->
-//            val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.CHINA)
-//            val calendar = java.util.Calendar.getInstance().apply {
-//                time = formatter.parse(course.courseDetail.beginTime)!!
-//            }
-//            var weekday = calendar.get(java.util.Calendar.DAY_OF_WEEK) - 1
-//            if (weekday == 0) weekday = 7
-//            val matcher = Pattern.compile("(.*?)-(.*?)节").matcher(course.courseDetail.section)
-//            var timeBegin = 0
-//            var timeEnd = 0
-//            if (matcher.find()) {
-//                timeBegin = matcher.group(1).toInt()
-//            }
-//            if (matcher.find()) {
-//                timeEnd = matcher.group(2).toInt()
-//            }
 
-            val timeBegin = course.courseDetail.sectionEnd
-            val timeEnd = course.courseDetail.sectionStart
+            val timeBegin = course.sectionStart
+            val timeEnd = course.sectionEnd
             val llClass = FrameLayout(requireContext()).apply {
                 layoutParams = FrameLayout.LayoutParams(
                     viewModel.itemWidth.value!!,
                     viewModel.itemHeight.value!! * (timeEnd - timeBegin + 1)
                 )
                 (layoutParams as ViewGroup.MarginLayoutParams).updateMargins(
-                    left = (viewModel.itemWidth.value!! + 5) * (course.courseDetail.weekday - 1),
+                    left = (viewModel.itemWidth.value!! + 5) * (course.weekday - 1),
                     top = (viewModel.itemHeight.value!! + 5) * (timeBegin - 1)
                 )
                 background = AppCompatResources.getDrawable(context, R.drawable.bg_corner_10)
                 tag = course
                 val tv = TextView(context).apply {
-                    text = course.courseDetail.name + '\n' + course.courseDetail.place
+                    text = course.name + '\n' + course.place
                     textSize = 12f
                     setTextColor(resources.getColor(android.R.color.black))
                     gravity = Gravity.CENTER
@@ -152,7 +133,7 @@ class CourseTableItemFragment : BaseFragment<FragmentCoursetableItemBinding>() {
                     }
                 }
                 setOnClickListener { v ->
-                    val course = v.tag as CourseTableDto
+                    val course = v.tag as CourseDetailDto
                     CourseDetailPopup(
                         requireContext(),
                         course,
@@ -169,7 +150,7 @@ class CourseTableItemFragment : BaseFragment<FragmentCoursetableItemBinding>() {
 
     companion object {
         fun instance(week: Int): CourseTableItemFragment {
-            return CourseTableItemFragment().apply { fragmentWeek = week }
+            return CourseTableItemFragment(week)
         }
     }
 
