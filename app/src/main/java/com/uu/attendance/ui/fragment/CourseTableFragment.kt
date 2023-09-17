@@ -34,8 +34,6 @@ class CourseTableFragment : BaseFragment<FragmentCoursetableBinding>() {
 
         viewModel = ViewModelProvider(requireActivity()).get(CourseTableViewModel::class.java)
         binding.viewModel = viewModel
-//        viewModel.currentMonth.value = 6
-//        viewModel.currentWeek.value = 4
 
         binding.llSection.viewTreeObserver.addOnGlobalLayoutListener(object :
             ViewTreeObserver.OnGlobalLayoutListener {
@@ -69,6 +67,12 @@ class CourseTableFragment : BaseFragment<FragmentCoursetableBinding>() {
     private fun initViewPager() {
         viewModel.itemWidth.value = binding.vpTable.width / 7 - 5
 
+        viewModel.currentWeek.observe(this@CourseTableFragment) {
+            val distance = (it - 1) * 7
+            val date =
+                java.util.Date(viewModel.schoolOpenTime.value!!.time + distance * 24 * 60 * 60 * 1000L)
+            viewModel.currentMonth.value = date.month + 1
+        }
 
         launch(tryBlock = {
             StudentApi.getSemesterAndSchoolOpenTime().data!!.let {
@@ -77,28 +81,26 @@ class CourseTableFragment : BaseFragment<FragmentCoursetableBinding>() {
                 viewModel.schoolOpenTime.value = Date(java.util.Calendar.getInstance().apply {
                     time = formatter.parse(it.schoolOpenTime)!!
                 }.timeInMillis)
+                val nowDate = Date(System.currentTimeMillis())
+                val distance =
+                    (nowDate.time - viewModel.schoolOpenTime.value!!.time) / (24 * 60 * 60 * 1000L)
+                viewModel.currentWeek.value = (distance / 7).toInt() + 1
             }
-        }, catchBlock = {
-            it.printStackTrace()
-            Toaster.show("获取学期信息失败")
-        }, finallyBlock = {
+
 
             binding.vpTable.adapter = CourseTableAdapter(this@CourseTableFragment)
+            binding.vpTable.currentItem = viewModel.currentWeek.value!! - 1
             binding.vpTable.offscreenPageLimit = 1
             binding.vpTable.registerOnPageChangeCallback(object :
                 androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-
                     viewModel.currentWeek.value = position + 1
-
-                    val distance = position * 7
-                    val date =
-                        java.util.Date(viewModel.schoolOpenTime.value!!.time + distance * 24 * 60 * 60 * 1000L)
-                    viewModel.currentMonth.value = date.month
                 }
             })
-
+        }, catchBlock = {
+            it.printStackTrace()
+            Toaster.show("获取学期信息失败")
         })
 
 
