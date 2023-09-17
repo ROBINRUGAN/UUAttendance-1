@@ -34,14 +34,14 @@ class CourseTableItemFragment(private val week: Int) :
         }, catchBlock = {
             it.printStackTrace()
         }, finallyBlock = {
-            initHeader(viewModel.courseList[week])
+            initHeader()
             initBody(viewModel.courseList[week])
         })
 
     }
 
     @SuppressLint("SetTextI18n")
-    private fun initHeader(courseBeans: List<CourseDetailDto>?) {
+    private fun initHeader() {
         binding.llHeader.removeAllViews()
         val weekdays = listOf("一", "二", "三", "四", "五", "六", "日")
 
@@ -49,13 +49,8 @@ class CourseTableItemFragment(private val week: Int) :
         for (i in 1..7) {
             val distance = (week - 1) * 7 + i - 1
             val date =
-                java.util.Date(viewModel.schoolOpenTime.value!!.time + distance * 24 * 60 * 60 * 1000)
-            val calendar = java.util.Calendar.getInstance().apply { time = date }
-            if (i == 1) {
-                // 左上角月份
-                viewModel.currentMonth.value = calendar.get(java.util.Calendar.MONTH) + 1
+                java.util.Date(viewModel.schoolOpenTime.value!!.time + distance * 24 * 60 * 60 * 1000L)
 
-            }
             val tv = TextView(context).apply {
                 text =
                     weekdays[i - 1] + '\n' + date.date.toString()
@@ -77,7 +72,6 @@ class CourseTableItemFragment(private val week: Int) :
 
     @SuppressLint("SetTextI18n")
     private fun initBody(courseBeans: List<CourseDetailDto>?) {
-//        debug(courseBeans.toString())
         if (courseBeans.isNullOrEmpty()) return
         binding.flBody.removeAllViews()
         courseBeans.forEach { course ->

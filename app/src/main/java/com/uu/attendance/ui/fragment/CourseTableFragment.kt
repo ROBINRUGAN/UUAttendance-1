@@ -91,6 +91,11 @@ class CourseTableFragment : BaseFragment<FragmentCoursetableBinding>() {
                     super.onPageSelected(position)
 
                     viewModel.currentWeek.value = position + 1
+
+                    val distance = position * 7
+                    val date =
+                        java.util.Date(viewModel.schoolOpenTime.value!!.time + distance * 24 * 60 * 60 * 1000L)
+                    viewModel.currentMonth.value = date.month
                 }
             })
 
