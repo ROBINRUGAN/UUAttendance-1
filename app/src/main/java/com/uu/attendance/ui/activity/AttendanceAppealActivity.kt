@@ -16,7 +16,7 @@ class AttendanceAppealActivity : BaseToolbarActivity<ActivityAttendanceAppealBin
     }
 
     override fun getViewBelowToolbar(): View {
-        return binding.rvList
+        return binding.swipe
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,12 +27,20 @@ class AttendanceAppealActivity : BaseToolbarActivity<ActivityAttendanceAppealBin
         }
         binding.rvList.adapter = AttendanceAppealAdapter()
 
+        binding.swipe.setOnRefreshListener { doGet() }
+        doGet()
+    }
+
+    private fun doGet() {
         launch(tryBlock = {
+            binding.swipe.isRefreshing = true
             val data = StudentApi.getAttendanceAppealList()
             (binding.rvList.adapter as AttendanceAppealAdapter).setData(data.data!!)
         }, catchBlock = {
             debug(it)
             Toaster.show("获取考勤申诉列表失败")
+        }, finallyBlock = {
+            binding.swipe.isRefreshing = false
         })
     }
 }

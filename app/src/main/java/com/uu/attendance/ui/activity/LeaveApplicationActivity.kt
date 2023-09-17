@@ -16,7 +16,7 @@ class LeaveApplicationActivity : BaseToolbarActivity<ActivityLeaveApplicationBin
     }
 
     override fun getViewBelowToolbar(): View {
-        return binding.rvApplicationList
+        return binding.swipe
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,12 +27,20 @@ class LeaveApplicationActivity : BaseToolbarActivity<ActivityLeaveApplicationBin
         }
         binding.rvApplicationList.adapter = ApplicationListAdapter()
 
+        binding.swipe.setOnRefreshListener { doGet() }
+        doGet()
+    }
+
+    private fun doGet() {
         launch(tryBlock = {
+            binding.swipe.isRefreshing = true
             val data = StudentApi.getLeaveApplicationList()
             (binding.rvApplicationList.adapter as ApplicationListAdapter).setData(data.data!!)
         }, catchBlock = {
             debug(it)
             Toaster.show("获取请假申请列表失败")
+        }, finallyBlock = {
+            binding.swipe.isRefreshing = false
         })
     }
 }

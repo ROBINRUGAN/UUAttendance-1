@@ -35,6 +35,7 @@ class SuperviseFragment : BaseFragment<FragmentSuperviseBinding>() {
 
     private fun doGet() {
         launch(tryBlock = {
+            binding.swipe.isRefreshing = true
             SuperviseApi.getSuperviseTaskList().data?.rows?.let { sadapter.setData(it) }
         }, catchBlock = {
             it.printStackTrace()
