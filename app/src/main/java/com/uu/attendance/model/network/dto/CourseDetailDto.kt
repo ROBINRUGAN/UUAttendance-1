@@ -8,6 +8,8 @@ data class CourseDetailDto(
     val day: Int,
     val sectionStart: Int,
     val sectionEnd: Int,
+    val beginTime: String,
+    val endTime: String,
     val teacher: Int,
     val place: String,
     val teacherName: String,

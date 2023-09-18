@@ -1,6 +1,7 @@
 package com.uu.attendance.model.network.api
 
 import com.uu.attendance.model.network.RetrofitProvider
+import com.uu.attendance.model.network.dto.NewLeaveApplicationDto
 import com.uu.attendance.model.network.service.StudentService
 
 object StudentApi {
@@ -15,4 +16,6 @@ object StudentApi {
     suspend fun getAttendanceAppealList() = studentService.getAttendanceAppealList()
 
     suspend fun getSemesterAndSchoolOpenTime() = studentService.getSemesterAndSchoolOpenTime()
+
+    suspend fun postLeaveApplication(body: NewLeaveApplicationDto) = studentService.postLeaveApplication(body)
 }

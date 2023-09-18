@@ -4,8 +4,11 @@ import com.uu.attendance.base.dto.BaseDto
 import com.uu.attendance.model.network.dto.AttendanceAppealInfoDto
 import com.uu.attendance.model.network.dto.CourseDetailDto
 import com.uu.attendance.model.network.dto.LeaveApplicationInfoDto
+import com.uu.attendance.model.network.dto.NewLeaveApplicationDto
 import com.uu.attendance.model.network.dto.SemesterInfoDao
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface StudentService {
@@ -24,5 +27,10 @@ interface StudentService {
 
     @GET("/courseDetails/dataColumn")
     suspend fun getSemesterAndSchoolOpenTime(): BaseDto<SemesterInfoDao>
+
+    @POST("/leaves")
+    suspend fun postLeaveApplication(
+        @Body body: NewLeaveApplicationDto
+    ): BaseDto<Any>
 
 }

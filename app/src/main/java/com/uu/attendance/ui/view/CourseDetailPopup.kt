@@ -2,11 +2,14 @@ package com.uu.attendance.ui.view
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
 import android.widget.TextView
 import com.uu.attendance.R
 import com.uu.attendance.model.network.dto.CourseDetailDto
+import com.uu.attendance.ui.activity.NewLeaveApplicationActivity
 import razerdp.basepopup.BasePopupWindow
 
 @SuppressLint("SetTextI18n")
@@ -21,6 +24,17 @@ class CourseDetailPopup(context: Context, course: CourseDetailDto, currentWeek: 
         findViewById<TextView>(R.id.tv_time).text =
             course.sectionStart.toString() + "-" + course.sectionEnd.toString() + "节"
         findViewById<TextView>(R.id.tv_week).text = "第${currentWeek}周"
+        findViewById<TextView>(R.id.tv_leave_apply).setOnClickListener {
+            val intent = Intent(context, NewLeaveApplicationActivity::class.java)
+            val bundle = Bundle().apply {
+                putInt("courseId", course.id)
+                putString("courseName", course.name)
+                putString("beginTime", course.beginTime)
+                putString("endTime", course.endTime)
+            }
+            intent.putExtra("bundle", bundle)
+            context.startActivity(intent)
+        }
     }
 
     override fun onCreateShowAnimation(): Animation {

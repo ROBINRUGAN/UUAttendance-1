@@ -23,6 +23,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="34">
         <activity
+            android:name=".ui.activity.NewLeaveApplicationActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activity.AttendanceAppealActivity"
             android:exported="false" />
         <activity
