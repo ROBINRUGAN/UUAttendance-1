@@ -55,7 +55,7 @@ class CourseTableItemFragment(private val week: Int) :
                 text =
                     weekdays[i - 1] + '\n' + date.date.toString()
                 textSize = 18f
-                setTextColor(resources.getColor(android.R.color.black))
+                setTextColor(context.getColor(android.R.color.black))
                 gravity = Gravity.CENTER
                 layoutParams = LinearLayout.LayoutParams(
                     viewModel.itemWidth.value!!, LayoutParams.MATCH_PARENT
@@ -92,7 +92,7 @@ class CourseTableItemFragment(private val week: Int) :
                 val tv = TextView(context).apply {
                     text = course.name + '\n' + course.place
                     textSize = 12f
-                    setTextColor(resources.getColor(android.R.color.black))
+                    setTextColor(context.getColor(android.R.color.black))
                     gravity = Gravity.CENTER
                     layoutParams = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
@@ -110,7 +110,7 @@ class CourseTableItemFragment(private val week: Int) :
                     gravity = Gravity.CENTER
                     background = AppCompatResources.getDrawable(context, R.drawable.bg_corner_10)
                     setTextColor(
-                        resources.getColor(
+                        context.getColor(
                             when (course.status) {
                                 0 -> R.color.blue
                                 1 -> R.color.green
@@ -127,10 +127,9 @@ class CourseTableItemFragment(private val week: Int) :
                     }
                 }
                 setOnClickListener { v ->
-                    val course = v.tag as CourseDetailDto
                     CourseDetailPopup(
                         requireContext(),
-                        course,
+                        v.tag as CourseDetailDto,
                         viewModel.currentWeek.value!!
                     ).showPopupWindow()
                 }
