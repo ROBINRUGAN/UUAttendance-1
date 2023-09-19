@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.uu.attendance.R
 import com.uu.attendance.base.ui.BaseFragment
 import com.uu.attendance.databinding.FragmentCoursetableItemBinding
+import com.uu.attendance.model.CourseStatus
 import com.uu.attendance.model.network.dto.CourseDetailDto
 import com.uu.attendance.ui.view.CourseDetailPopup
 import com.uu.attendance.util.ConvertUtil.Companion.dp
@@ -101,9 +102,9 @@ class CourseTableItemFragment(private val week: Int) :
                 }
                 val tvStatus = TextView(context).apply {
                     text = when (course.status) {
-                        0 -> "未"
-                        1 -> "已"
-                        2 -> "缺"
+                        CourseStatus.UNCHECKED -> "未"
+                        CourseStatus.CHECKED -> "已"
+                        CourseStatus.ABSENT -> "缺"
                         else -> "请"
                     }
                     textSize = 13f

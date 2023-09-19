@@ -10,7 +10,6 @@ import com.uu.attendance.ui.adapter.ViewPagerSuperviseDetailAdapter
 class SuperviseDetailActivity : BaseToolbarActivity<ActivitySuperviseDetailBinding>() {
 
     lateinit var viewModel: SuperviseViewModel
-    private var courseId: Int = -1
     override fun getToolbarTitle(): String {
         return "督导详情"
     }
@@ -22,13 +21,14 @@ class SuperviseDetailActivity : BaseToolbarActivity<ActivitySuperviseDetailBindi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        courseId = intent.getIntExtra("courseId", -1)
-        if (courseId == -1) {
+        viewModel = ViewModelProvider(this).get(SuperviseViewModel::class.java)
+
+        viewModel.courseId = intent.getIntExtra("courseId", -1)
+        if (viewModel.courseId == -1) {
             finish()
             return
         }
 
-        viewModel = ViewModelProvider(this).get(SuperviseViewModel::class.java)
 
         binding.vp2.adapter = ViewPagerSuperviseDetailAdapter(this)
         binding.vp2.isUserInputEnabled = false
@@ -36,16 +36,14 @@ class SuperviseDetailActivity : BaseToolbarActivity<ActivitySuperviseDetailBindi
 
 //        binding.vp2.currentItem = 1  // debug
 
-        viewModel.isSearch.observe(this) {
-            if (it) {
-                binding.vp2.currentItem = 0
-            }
+        viewModel.currentFragment.observe(this) {
+            binding.vp2.currentItem = it
         }
     }
 
     override fun onBackPressed() {
-        if (binding.vp2.currentItem == 1) {
-            binding.vp2.currentItem = 0
+        if (viewModel.currentFragment.value == 1) {
+            viewModel.currentFragment.value = 0
         } else {
             super.onBackPressed()
         }

@@ -52,5 +52,7 @@
         android:paddingBottom="30dp"
         android:text="已到：119人       缺勤：4人       请假：1人"
         android:textColor="@color/black"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:visibility="gone" />
+    <!--接口未提供-->
 </LinearLayout>

@@ -6,14 +6,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.uu.attendance.R
 import com.uu.attendance.base.ui.BaseRecyclerViewAdapter
-import com.uu.attendance.model.bean.StudentBean
+import com.uu.attendance.model.network.api.SuperviseApi
+import com.uu.attendance.model.network.dto.SuperviseStudentDto
 
-class SuperviseCardAdapter(list: MutableList<StudentBean>) :
-    BaseRecyclerViewAdapter<StudentBean>() {
+class SuperviseCardAdapter(val courseId: Int, first: MutableList<SuperviseStudentDto>) :
+    BaseRecyclerViewAdapter<SuperviseStudentDto>() {
     init {
-        this.list = list
+        this.list = first
     }
-    
+
     override fun getViewHolder(viewType: Int, view: View): RecyclerView.ViewHolder {
         return CardViewHolder(view)
     }
@@ -29,13 +30,13 @@ class SuperviseCardAdapter(list: MutableList<StudentBean>) :
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder !is CardViewHolder) return   //impossible
-        holder.tvInfo.text = list[position].studentId.toString() + '\n' + list[position].name
+        holder.tvInfo.text = list[position].studentId.toString() + '\n' + list[position].studentName
         // todo set avatar
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun getOneMoreData() {
-        val sb = StudentBean(7, "吴九", 2019210007, "", 0)
+    suspend fun getOneMoreData() {
+        val sb = SuperviseApi.getWhoNoCheck(courseId).data ?: return
         list.add(sb)
         notifyDataSetChanged()  // 暂时使用notifyDataSetChanged，其他方法会导致卡片alpha突变
         // todo 网络获取

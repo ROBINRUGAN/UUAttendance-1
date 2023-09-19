@@ -67,6 +67,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private fun switchSuperviseVisibility() {
         binding.navView.menu.findItem(R.id.navigation_supervise).isVisible =
-            KVUtil.get("identity", Identity.STUDENT) == Identity.SUPERVISER
+            KVUtil.get("identity", Identity.STUDENT) == Identity.SUPERVISOR
     }
 }
