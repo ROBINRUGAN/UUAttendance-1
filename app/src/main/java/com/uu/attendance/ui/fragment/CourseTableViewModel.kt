@@ -23,7 +23,7 @@ class CourseTableViewModel : ViewModel() {
         try {
             courseList[week] = (
                     StudentApi.getCourseTable(
-                        currentWeek.value!!,
+                        week,
                         currentSemester.value!!
                     ).data)
         } catch (e: Exception) {
