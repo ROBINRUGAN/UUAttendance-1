@@ -1,8 +1,10 @@
 package com.uu.attendance.ui.fragment
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.hjq.toast.Toaster
 import com.uu.attendance.base.ui.BaseFragment
@@ -19,6 +21,8 @@ import com.uu.attendance.util.LogUtil.Companion.debug
 
 class MeFragment : BaseFragment<FragmentMeBinding>() {
 
+    lateinit var viewModel: CourseTableViewModel
+
     companion object {
         val instance: MeFragment by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
             MeFragment()
@@ -27,6 +31,8 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProvider(requireActivity()).get(CourseTableViewModel::class.java)
 
         binding.ivAvatar.setOnClickListener {
             val intent = Intent(requireContext(), LoginActivity::class.java)
@@ -88,12 +94,16 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
 
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onResume() {
         super.onResume()
         binding.identity.text = when (KVUtil.get("identity", Identity.STUDENT)) {
             Identity.STUDENT -> "学生"
             else -> "督导"
         }
+        binding.tvTerm.text = viewModel.currentSemester.value.toString()
+            .substring(0, 4) + " 年 " + viewModel.currentSemester.value.toString().substring(5) + " 学期"
+        binding.tvWeek.text = "第 ${viewModel.currentWeek.value} 周"
     }
 
 
