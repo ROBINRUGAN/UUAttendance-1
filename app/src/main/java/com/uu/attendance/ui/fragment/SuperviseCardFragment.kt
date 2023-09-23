@@ -47,6 +47,10 @@ class SuperviseCardFragment : BaseFragment<FragmentSuperviseCardBinding>() {
             val recyclerView = binding.rvSuperviseList
 
             adapter = SuperviseCardAdapter(viewModel.courseId, list)
+            launch(tryBlock = {
+                adapter.getOneMoreData()
+                adapter.getOneMoreData()
+            })
             val cardCallback = CardItemTouchHelperCallback(adapter, list)
             val touchHelper = ItemTouchHelper(cardCallback)
             val cardLayoutManager = CardLayoutManager(recyclerView, touchHelper)

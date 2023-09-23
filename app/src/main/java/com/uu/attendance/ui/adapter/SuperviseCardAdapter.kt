@@ -30,7 +30,7 @@ class SuperviseCardAdapter(val courseId: Int, first: MutableList<SuperviseStuden
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder !is CardViewHolder) return   //impossible
-        holder.tvInfo.text = list[position].studentId.toString() + '\n' + list[position].studentName
+        holder.tvInfo.text = list[position].studentNo + '\n' + list[position].studentName
         // todo set avatar
     }
 
@@ -38,8 +38,8 @@ class SuperviseCardAdapter(val courseId: Int, first: MutableList<SuperviseStuden
     suspend fun getOneMoreData() {
         val sb = SuperviseApi.getWhoNoCheck(courseId).data ?: return
         list.add(sb)
-        notifyDataSetChanged()  // 暂时使用notifyDataSetChanged，其他方法会导致卡片alpha突变
-        // todo 网络获取
+//        notifyDataSetChanged()  // 暂时使用notifyDataSetChanged，其他方法会导致卡片alpha突变
+        notifyItemInserted(list.size - 1)
     }
 
 }

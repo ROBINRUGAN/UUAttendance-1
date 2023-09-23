@@ -1,5 +1,6 @@
 package com.uu.attendance.ui.adapter
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -48,5 +49,24 @@ class SuperviseStudentDetailAdapter(val viewModel: SuperviseViewModel) :
             viewModel.currentStudent.value = list[position]
             viewModel.currentFragment.value = 1
         }
+    }
+
+    private var originList = mutableListOf<SuperviseStudentDto>()
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun filter(s: String) {
+        if (s.isEmpty()) {
+            if (originList.isNotEmpty()) {
+                list.clear()
+                list.addAll(originList)
+                originList.clear()
+            }
+        } else {
+            if (originList.isEmpty()) originList = list
+            list = originList.filter {
+                it.studentName.contains(s) || it.studentNo.contains(s)
+            }.toMutableList()
+        }
+        notifyDataSetChanged()
     }
 }
