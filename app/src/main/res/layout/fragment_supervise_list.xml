@@ -28,7 +28,7 @@
                 android:background="@null"
                 android:drawableStart="@drawable/ic_search"
                 android:drawablePadding="6dp"
-                android:hint="学号"
+                android:hint="搜索学号、姓名"
                 android:imeOptions="actionDone"
                 android:maxLength="15"
                 android:maxLines="1"

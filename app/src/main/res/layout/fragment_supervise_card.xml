@@ -22,7 +22,7 @@
             android:drawableStart="@drawable/ic_search"
             android:drawablePadding="6dp"
             android:focusable="false"
-            android:hint="学号"
+            android:hint="搜索学号、姓名"
             android:padding="6dp"
             android:paddingStart="10dp" />
     </LinearLayout>
@@ -70,12 +70,19 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="25dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="invisible">
 
         <TextView
             android:layout_width="70dp"
-            android:layout_margin="10dp"
             android:layout_height="70dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_round_white" />
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
             android:background="@drawable/bg_round_white" />
 
         <TextView
@@ -86,14 +93,8 @@
 
         <TextView
             android:layout_width="70dp"
-            android:layout_margin="10dp"
             android:layout_height="70dp"
-            android:background="@drawable/bg_round_white" />
-
-        <TextView
             android:layout_margin="10dp"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
             android:background="@drawable/bg_round_white" />
     </LinearLayout>
 </LinearLayout>
