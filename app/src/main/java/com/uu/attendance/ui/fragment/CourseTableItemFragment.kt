@@ -30,6 +30,12 @@ class CourseTableItemFragment(private val week: Int) :
         viewModel = ViewModelProvider(requireActivity()).get(CourseTableViewModel::class.java)
         binding.viewModel = viewModel
 
+        binding.swipe.setOnRefreshListener { doGet() }
+        doGet()
+
+    }
+
+    private fun doGet() {
         launch(tryBlock = {
             viewModel.getCourseTable(week)
         }, catchBlock = {
@@ -37,8 +43,8 @@ class CourseTableItemFragment(private val week: Int) :
         }, finallyBlock = {
             initHeader()
             initBody(viewModel.courseList[week])
+            binding.swipe.isRefreshing = false
         })
-
     }
 
     @SuppressLint("SetTextI18n")
