@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.hjq.toast.Toaster
 import com.uu.attendance.R
 import com.uu.attendance.base.ui.BaseRecyclerViewAdapter
 import com.uu.attendance.model.network.dto.SuperviseTask
@@ -29,12 +30,17 @@ class SuperviseListAdapter : BaseRecyclerViewAdapter<SuperviseTask>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder !is ViewHolder) return
         holder.tvClassName.text = list[position].courseName
-        holder.tvClassTime.text = "上课时间："+list[position].beginTime + "-" + list[position].endTime
-        holder.tvStatus.text = if (position==0) "预点名" else ""
+        holder.tvClassTime.text =
+            "上课时间：" + list[position].beginTime + "-" + list[position].endTime
+        holder.tvStatus.text = if (position == 0) "预点名" else ""
         holder.itemView.setOnClickListener {
-            val intent = Intent(it.context, SuperviseDetailActivity::class.java)
-            intent.putExtra("courseId", list[position].courseId)
-            it.context.startActivity(intent)
+            if (position == 0) {
+                val intent = Intent(it.context, SuperviseDetailActivity::class.java)
+                intent.putExtra("courseId", list[position].courseId)
+                it.context.startActivity(intent)
+            } else {
+                Toaster.show("该课程尚未开始点名")
+            }
         }
     }
 
