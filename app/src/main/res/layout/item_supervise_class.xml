@@ -3,8 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_corner_35"
-    android:layout_margin="25dp"
+    android:layout_marginStart="25dp"
+    android:layout_marginTop="25dp"
+    android:layout_marginEnd="25dp"
+    android:background="@drawable/bg_corner_20"
     android:padding="20dp">
 
     <TextView
@@ -24,8 +26,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="上课时间：每周上课的那一天，若分单双周表明"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/tv_status"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_class_name" />
 
     <TextView
