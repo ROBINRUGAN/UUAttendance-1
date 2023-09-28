@@ -1,14 +1,17 @@
 package com.uu.attendance.ui.fragment
 
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.ViewModelProvider
 import com.amap.api.maps.AMap
 import com.amap.api.maps.MapsInitializer
 import com.amap.api.maps.model.LatLng
 import com.amap.api.maps.model.MarkerOptions
 import com.amap.api.maps.model.MyLocationStyle
+import com.google.gson.Gson
 import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
@@ -16,6 +19,10 @@ import com.hjq.toast.Toaster
 import com.uu.attendance.R
 import com.uu.attendance.base.ui.BaseFragment
 import com.uu.attendance.databinding.FragmentSigninBinding
+import com.uu.attendance.model.CourseStatus
+import com.uu.attendance.model.network.api.StudentApi
+import com.uu.attendance.model.network.dto.NowAttendanceDto
+import com.uu.attendance.model.network.dto.SignInDto
 import com.uu.attendance.util.KVUtil
 import com.uu.attendance.util.LatLngUtil
 import com.uu.attendance.util.LogUtil.Companion.debug
@@ -67,9 +74,9 @@ class SigninFragment : BaseFragment<FragmentSigninBinding>() {
 
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initWebSocket() {
 
-// 构建OkHttpClient配置初始化一些参数
         client = OkHttpClient.Builder()
             .readTimeout(0, TimeUnit.MILLISECONDS)
             .addInterceptor {
@@ -80,100 +87,103 @@ class SigninFragment : BaseFragment<FragmentSigninBinding>() {
             }
             .build()
 
-// 使用WebSocket的Url地址连接
         val request = Request.Builder()
             .url("ws://111.229.173.12:9090/websocket/studentNowAttendances/" + KVUtil.get("id", -1))
             .build()
 
-// 设置WebSocket的连接状态回调和消息回调
         val listener = object : WebSocketListener() {
             override fun onOpen(webSocket: WebSocket, response: Response) {
-                // 连接成功后，使用WebSocket发送消息
-                webSocket.send("Hello, world!")
                 debug("onOpen")
             }
 
             override fun onMessage(webSocket: WebSocket, text: String) {
-                // 接收到服务器的消息
-                debug("Received: $text")
+                debug("ReceivedText: $text")
+                try {
+                    viewModel.nowAttendanceDto.postValue(
+                        Gson().fromJson(text, NowAttendanceDto::class.java)
+                    )
+                } catch (e: Exception) {
+                    debug(e)
+                    Toaster.show("获取签到信息失败")
+                }
             }
 
             override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
-                // 连接关闭
                 debug("Closed: $code $reason")
             }
 
             override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-                // 连接失败
                 debug("Error: ${t.message}")
             }
         }
 
-// 创建WebSocket实例
         webSocket = client.newWebSocket(request, listener)
-        debug("webSocket: $webSocket")
 
 
-//        val uri: URI? = URI.create(
-//            "ws://111.229.173.12:9090/websocket/studentNowAttendances/"
-//                    + KVUtil.get("id", -1)
-//        )
+        viewModel.nowAttendanceDto.observe(viewLifecycleOwner) {
+            if (it == null) {
+                viewModel.destLatLng.value = null
+                binding.tvClassName.text = "UU考勤"
+                binding.btnSignin.text = "无签到"
+                binding.btnSignin.background = AppCompatResources.getDrawable(
+                    requireContext(),
+                    R.drawable.bg_btn_signin_nosign
+                )
+                binding.btnSignin.setOnClickListener { }
+                //binding.tvSigninHint.text = "现无签到"
+                binding.tvLocationHint.visibility = View.GONE
+            } else {
+                try {
+//                    val lat = LatLngUtil.convertToDecimal(it.latitude)
+//                    val lng = LatLngUtil.convertToDecimal(it.longitude)
+//                    val latlng = LatLng(lat, lng, false)
+                    val latlng = LatLng(it.latitude.toDouble(), it.longitude.toDouble(), false)
+                    setDestination(latlng)
+                } catch (e: Exception) {
+                    debug(e)
+                    Toaster.show("处理定位信息失败")
+                }
+                binding.tvClassName.text = it.courseName
+                binding.btnSignin.text = when (it.status) {
+                    CourseStatus.UNCHECKED -> "未签到"
+                    CourseStatus.CHECKED -> "已签到"
+                    else -> throw IllegalStateException("status should be UNCHECKED or CHECKED")
+                }
+                binding.btnSignin.background = AppCompatResources.getDrawable(
+                    requireContext(),
+                    when (it.status) {
+                        CourseStatus.UNCHECKED -> R.drawable.bg_btn_signin_notsigned
+                        CourseStatus.CHECKED -> R.drawable.bg_btn_signin_signed
+                        else -> throw IllegalStateException("status should be UNCHECKED or CHECKED")
+                    }
+                )
+                binding.btnSignin.setOnClickListener {
+                    if (binding.tvLocationHint.text == "属于签到范围") { //todo 修改判定条件
+                        val dlg = ProgressDialog(requireContext())
+                        dlg.setMessage("正在签到")
+                        dlg.show()
+                        launch(tryBlock = {
+                            val dto = SignInDto(
+                                viewModel.nowAttendanceDto.value!!.courseId,
+                                viewModel.currentLatLng.value!!.longitude.toString(),
+                                viewModel.currentLatLng.value!!.latitude.toString()
+                            )
+                            val result = StudentApi.signIn(dto)
+                            Toaster.show(result.msg)
+                        }, catchBlock = {
+                            it.printStackTrace()
+                            Toaster.show("签到出错，请重试")
+                        }, finallyBlock = {
+                            dlg.dismiss()
+                        })
+                    } else {
+                        Toaster.show("请移动到签到范围后进行签到")
+                    }
+                }
+                binding.tvLocationHint.visibility = View.VISIBLE
+            }
 
-
-//        val client = OkHttpClient()
-//        val request: Request = Request.Builder().url(
-//            "ws://111.229.173.12:9090/websocket/studentNowAttendances/"
-//                    + KVUtil.get("id", -1)
-//        ).build()
-//
-//        webSocket = client.newWebSocket(request, object : WebSocketListener() {
-//            override fun onOpen(webSocket: WebSocket, response: Response) {
-//                super.onOpen(webSocket, response)
-//                debug("onOpen")
-//                // 连接成功时的处理
-//            }
-//
-//            override fun onMessage(webSocket: WebSocket, text: String) {
-//                super.onMessage(webSocket, text)
-//                debug("onMessage: $text")
-//                // 接收到消息时的处理
-//            }
-//
-//            override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
-//                super.onClosing(webSocket, code, reason)
-//                debug("onClosing")
-//                // 关闭连接时的处理
-//            }
-//
-//            override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-//                super.onFailure(webSocket, t, response)
-//                debug("onFailure, t: $t")
-//                // 连接失败时的处理
-//            }
-//        })
-
-
-//        debug(uri.toString())
-//        client = object : MyWebSocketClient(uri) {
-//            override fun onMessage(message: String?) {
-//                super.onMessage(message)
-////                val record = Gson().fromJson(message, MsgRecord::class.java)
-////                MsgDatabase.getDatabase().msgRecordDao().insertMsgRecord(record)
-////                sendNotification(record)
-//            }
-//        }
-//
-//        if (!client.isOpen) {
-//            if (client.readyState == ReadyState.NOT_YET_CONNECTED) {
-//                try {
-//                    client.connectBlocking()
-//                } catch (e: IllegalStateException) {
-//                    debug(e)
-//                }
-//            } else if (client.readyState == ReadyState.CLOSING || client.readyState == ReadyState.CLOSED) {
-//                client.reconnectBlocking()
-//            }
-//        }
+        }
     }
 
 
@@ -200,23 +210,39 @@ class SigninFragment : BaseFragment<FragmentSigninBinding>() {
             viewModel.currentLatLng.value = LatLng(location.latitude, location.longitude)
         }
 
-        val latLng = LatLng(30.652, 120.013)
-        setDestination(latLng)
         viewModel.currentLatLng.observe(viewLifecycleOwner) {
-            val distance = LatLngUtil.getDistance(it, viewModel.destLatLng.value!!) - 20
-            if (distance > 0) {
-                binding.tvLocationHint.text = "距离签到范围还有 ${"%.1f".format(distance)} 米"
-                binding.tvLocationHint.setTextColor(resources.getColor(R.color.pink))
+            if (it.latitude == 0.0 || it.longitude == 0.0) return@observe //not prepared
+            debug("lat" + it.latitude)
+            debug("lng" + it.longitude)
+            viewModel.destLatLng.value?.let {
+                debug("destlat" + it.latitude)
+                debug("destlng" + it.longitude)
+            }
+            val distance = LatLngUtil.getDistance(it, viewModel.destLatLng.value)
+            if (distance == -1.0) {
+                binding.tvLocationHint.visibility = View.GONE
             } else {
-                binding.tvLocationHint.text = "属于签到范围"
-                binding.tvLocationHint.setTextColor(resources.getColor(R.color.green))
+                binding.tvLocationHint.visibility = View.VISIBLE
+                if (distance - 20 > 0) {
+                    binding.tvLocationHint.text = "距离签到范围还有 ${"%.1f".format(distance)} 米"
+                    binding.tvLocationHint.setTextColor(requireContext().getColor(R.color.pink))
+                } else {
+                    binding.tvLocationHint.text = "属于签到范围"
+                    binding.tvLocationHint.setTextColor(requireContext().getColor(R.color.green))
+                }
             }
         }
     }
 
-    private fun setDestination(latLng: LatLng) {
+    private fun setDestination(latLng: LatLng?) {
         viewModel.destLatLng.value = latLng
-        aMap.addMarker(MarkerOptions().position(latLng).title("教室").snippet("DefaultMarker"))
+        if (latLng != null) {
+            aMap.addMarker(
+                MarkerOptions().position(latLng).title("签到点").snippet("DefaultMarker")
+            )
+        } else {
+            //todo remove marker
+        }
     }
 
     override fun onDestroy() {

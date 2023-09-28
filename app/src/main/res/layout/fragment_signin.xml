@@ -18,6 +18,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_class_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -25,18 +26,18 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="50dp"
                 android:layout_marginBottom="30dp"
-                android:text="毛泽东思想和中国特色社会主义理论体系"
+                android:text="UU考勤"
                 android:textColor="@color/black"
                 android:textSize="30sp" />
 
-            <TextView
+            <Button
                 android:id="@+id/btn_signin"
                 android:layout_width="250dp"
                 android:layout_height="250dp"
                 android:layout_gravity="center"
-                android:background="@drawable/bg_btn_signin_notsigned"
+                android:background="@drawable/bg_btn_signin_nosign"
                 android:gravity="center"
-                android:text="未签到"
+                android:text="无签到"
                 android:textColor="@color/white"
                 android:textSize="30sp" />
 
@@ -45,17 +46,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="30dp"
+                android:layout_marginTop="30dp"
                 android:gravity="center"
-                android:text="10:45 前未签到视为缺勤"
-                android:textColor="@color/pink"
-                android:textSize="26sp" />
+                android:text="现无签到"
+                android:textColor="@color/gray"
+                android:textSize="26sp"
+                android:visibility="gone" />
 
             <com.uu.attendance.ui.view.MapContainerLayout
                 android:id="@+id/mapContainerLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp">
 
                 <com.amap.api.maps.MapView
                     android:id="@+id/mapView"
@@ -71,7 +74,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="30dp"
                 android:gravity="center"
-                android:text="距离签到范围还有 51 米"
+                android:text=""
                 android:textColor="@color/pink"
                 android:textSize="26sp" />
 

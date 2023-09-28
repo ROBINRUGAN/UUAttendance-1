@@ -6,9 +6,11 @@ import com.uu.attendance.model.network.dto.CourseDetailDto
 import com.uu.attendance.model.network.dto.LeaveApplicationInfoDto
 import com.uu.attendance.model.network.dto.NewLeaveApplicationDto
 import com.uu.attendance.model.network.dto.SemesterInfoDao
+import com.uu.attendance.model.network.dto.SignInDto
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Query
 
 interface StudentService {
@@ -31,6 +33,11 @@ interface StudentService {
     @POST("/leaves")
     suspend fun postLeaveApplication(
         @Body body: NewLeaveApplicationDto
+    ): BaseDto<Any>
+
+    @PUT("/courseAttendances/signin")
+    suspend fun signIn(
+        @Body body: SignInDto
     ): BaseDto<Any>
 
 }
