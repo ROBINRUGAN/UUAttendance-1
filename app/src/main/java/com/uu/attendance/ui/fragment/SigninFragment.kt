@@ -147,14 +147,15 @@ class SigninFragment : BaseFragment<FragmentSigninBinding>() {
                 binding.btnSignin.text = when (it.status) {
                     CourseStatus.UNCHECKED -> "未签到"
                     CourseStatus.CHECKED -> "已签到"
-                    else -> throw IllegalStateException("status should be UNCHECKED or CHECKED")
+                    CourseStatus.LEAVE -> "已请假"
+                    else -> "已缺勤"
                 }
                 binding.btnSignin.background = AppCompatResources.getDrawable(
                     requireContext(),
                     when (it.status) {
                         CourseStatus.UNCHECKED -> R.drawable.bg_btn_signin_notsigned
                         CourseStatus.CHECKED -> R.drawable.bg_btn_signin_signed
-                        else -> throw IllegalStateException("status should be UNCHECKED or CHECKED")
+                        else -> R.drawable.bg_btn_signin_nosign
                     }
                 )
                 binding.btnSignin.setOnClickListener {
