@@ -2,27 +2,21 @@ package com.uu.attendance.ui.activity
 
 import android.app.ProgressDialog
 import android.os.Bundle
-import android.view.View
+import android.view.MenuItem
+import com.gyf.immersionbar.ImmersionBar
 import com.hjq.toast.Toaster
-import com.uu.attendance.base.ui.BaseToolbarActivity
+import com.uu.attendance.base.ui.BaseActivity
 import com.uu.attendance.databinding.ActivityNewLeaveApplicationBinding
 import com.uu.attendance.model.network.api.StudentApi
 import com.uu.attendance.model.network.dto.NewLeaveApplicationDto
 
-class NewLeaveApplicationActivity : BaseToolbarActivity<ActivityNewLeaveApplicationBinding>() {
+class NewLeaveApplicationActivity : BaseActivity<ActivityNewLeaveApplicationBinding>() {
     private val progress by lazy {
         ProgressDialog(this).apply {
             setMessage("提交中...")
         }
     }
 
-    override fun getToolbarTitle(): String {
-        return "请假申请"
-    }
-
-    override fun getViewBelowToolbar(): View {
-        return binding.llRoot
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +26,15 @@ class NewLeaveApplicationActivity : BaseToolbarActivity<ActivityNewLeaveApplicat
             binding.tvBegintime.text = it.getString("beginTime")
             binding.tvEndtime.text = it.getString("endTime")
         }
+
+        setSupportActionBar(binding.toolbar)
+        supportActionBar!!.apply {
+            title = "请假申请"
+            setHomeButtonEnabled(true)
+            setDisplayHomeAsUpEnabled(true)
+        }
+        ImmersionBar.setTitleBar(this, binding.toolbar)
+
 
         binding.btnSubmit.setOnClickListener {
             val reason = binding.etReason.text.toString()
@@ -62,5 +65,15 @@ class NewLeaveApplicationActivity : BaseToolbarActivity<ActivityNewLeaveApplicat
                 progress.dismiss()
             })
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
