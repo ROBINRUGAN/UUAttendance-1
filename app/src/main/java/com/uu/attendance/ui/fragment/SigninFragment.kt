@@ -120,8 +120,8 @@ class SigninFragment : BaseFragment<FragmentSigninBinding>() {
         webSocket = client.newWebSocket(request, listener)
 
 
-        viewModel.nowAttendanceDto.observe(viewLifecycleOwner) {
-            if (it == null) {
+        viewModel.nowAttendanceDto.observe(viewLifecycleOwner) { attendanceDto ->
+            if (attendanceDto == null) {
                 viewModel.destLatLng.value = null
                 binding.tvClassName.text = "UU考勤"
                 binding.btnSignin.text = "无签到"
@@ -134,17 +134,21 @@ class SigninFragment : BaseFragment<FragmentSigninBinding>() {
                 binding.tvLocationHint.visibility = View.GONE
             } else {
                 try {
-//                    val lat = LatLngUtil.convertToDecimal(it.latitude)
-//                    val lng = LatLngUtil.convertToDecimal(it.longitude)
+//                    val lat = LatLngUtil.convertToDecimal(attendanceDto.latitude)
+//                    val lng = LatLngUtil.convertToDecimal(attendanceDto.longitude)
 //                    val latlng = LatLng(lat, lng, false)
-                    val latlng = LatLng(it.latitude.toDouble(), it.longitude.toDouble(), false)
+                    val latlng = LatLng(
+                        attendanceDto.latitude.toDouble(),
+                        attendanceDto.longitude.toDouble(),
+                        false
+                    )
                     setDestination(latlng)
                 } catch (e: Exception) {
                     debug(e)
                     Toaster.show("处理定位信息失败")
                 }
-                binding.tvClassName.text = it.courseName
-                binding.btnSignin.text = when (it.status) {
+                binding.tvClassName.text = attendanceDto.courseName
+                binding.btnSignin.text = when (attendanceDto.status) {
                     CourseStatus.UNCHECKED -> "未签到"
                     CourseStatus.CHECKED -> "已签到"
                     CourseStatus.LEAVE -> "已请假"
@@ -152,33 +156,47 @@ class SigninFragment : BaseFragment<FragmentSigninBinding>() {
                 }
                 binding.btnSignin.background = AppCompatResources.getDrawable(
                     requireContext(),
-                    when (it.status) {
+                    when (attendanceDto.status) {
                         CourseStatus.UNCHECKED -> R.drawable.bg_btn_signin_notsigned
                         CourseStatus.CHECKED -> R.drawable.bg_btn_signin_signed
                         else -> R.drawable.bg_btn_signin_nosign
                     }
                 )
                 binding.btnSignin.setOnClickListener {
-                    if (binding.tvLocationHint.text == "属于签到范围") { //todo 修改判定条件
-                        val dlg = ProgressDialog(requireContext())
-                        dlg.setMessage("正在签到")
-                        dlg.show()
-                        launch(tryBlock = {
-                            val dto = SignInDto(
-                                viewModel.nowAttendanceDto.value!!.courseId,
-                                viewModel.currentLatLng.value!!.longitude.toString(),
-                                viewModel.currentLatLng.value!!.latitude.toString()
-                            )
-                            val result = StudentApi.signIn(dto)
-                            Toaster.show(result.msg)
-                        }, catchBlock = {
-                            it.printStackTrace()
-                            Toaster.show("签到出错，请重试")
-                        }, finallyBlock = {
-                            dlg.dismiss()
-                        })
-                    } else {
-                        Toaster.show("请移动到签到范围后进行签到")
+                    when (attendanceDto.status) {
+                        CourseStatus.UNCHECKED -> {
+                            if (binding.tvLocationHint.text == "属于签到范围") { //todo 修改判定条件
+                                val dlg = ProgressDialog(requireContext())
+                                dlg.setMessage("正在签到")
+                                dlg.show()
+                                launch(tryBlock = {
+                                    val dto = SignInDto(
+                                        viewModel.nowAttendanceDto.value!!.courseId,
+                                        viewModel.currentLatLng.value!!.longitude.toString(),
+                                        viewModel.currentLatLng.value!!.latitude.toString()
+                                    )
+                                    val result = StudentApi.signIn(dto)
+                                    Toaster.show(result.msg)
+                                }, catchBlock = {
+                                    it.printStackTrace()
+                                    Toaster.show("签到出错，请重试")
+                                }, finallyBlock = {
+                                    dlg.dismiss()
+                                })
+                            } else {
+                                Toaster.show("请移动到签到范围后进行签到")
+                            }
+                        }
+
+                        CourseStatus.CHECKED -> {}
+
+                        CourseStatus.LEAVE -> {
+                            Toaster.show("你已请假，无需签到")
+                        }
+
+                        CourseStatus.ABSENT -> {
+                            Toaster.show("你已缺勤，无法签到")
+                        }
                     }
                 }
                 binding.tvLocationHint.visibility = View.VISIBLE
@@ -207,12 +225,12 @@ class SigninFragment : BaseFragment<FragmentSigninBinding>() {
         aMap.uiSettings.isMyLocationButtonEnabled = true //设置默认定位按钮是否显示，非必需设置。
         aMap.isMyLocationEnabled = true // 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
 
-        aMap.addOnMyLocationChangeListener { location ->
-            viewModel.currentLatLng.value = LatLng(location.latitude, location.longitude)
+        aMap.addOnMyLocationChangeListener {
+            if (it.latitude == 0.0 || it.longitude == 0.0) return@addOnMyLocationChangeListener //not prepared
+            viewModel.currentLatLng.value = LatLng(it.latitude, it.longitude)
         }
 
         viewModel.currentLatLng.observe(viewLifecycleOwner) {
-            if (it.latitude == 0.0 || it.longitude == 0.0) return@observe //not prepared
             debug("lat" + it.latitude)
             debug("lng" + it.longitude)
             viewModel.destLatLng.value?.let {
