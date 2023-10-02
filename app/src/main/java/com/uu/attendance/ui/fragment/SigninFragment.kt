@@ -171,9 +171,9 @@ class SigninFragment : BaseFragment<FragmentSigninBinding>() {
                                 dlg.show()
                                 launch(tryBlock = {
                                     val dto = SignInDto(
-                                        viewModel.nowAttendanceDto.value!!.courseId,
-                                        viewModel.currentLatLng.value!!.longitude.toString(),
-                                        viewModel.currentLatLng.value!!.latitude.toString()
+                                        attendanceDto.courseId,
+                                        viewModel.currentLatLng.value?.longitude ?: -1.0,
+                                        viewModel.currentLatLng.value?.latitude ?: -1.0
                                     )
                                     val result = StudentApi.signIn(dto)
                                     Toaster.show(result.msg)
