@@ -58,7 +58,7 @@ android {
 dependencies {
 
     // core
-    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
 
     // test
@@ -91,7 +91,7 @@ dependencies {
     // others
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.amap.api:3dmap:latest.integration'
-    implementation 'com.github.getActivity:XXPermissions:18.2'
+    implementation 'com.github.getActivity:XXPermissions:18.3'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.12'
 
 }
