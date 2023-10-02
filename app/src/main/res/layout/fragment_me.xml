@@ -101,7 +101,6 @@
             android:id="@+id/tv_term"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2022 年 2 学期"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_xueyuan" />
 
@@ -109,7 +108,6 @@
             android:id="@+id/tv_week"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="第 9 周"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_id" />
 
@@ -140,6 +138,13 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_me_rule"
             android:text="考勤规则" />
+
+        <com.uu.attendance.ui.view.ItemFunctionEntryView
+            android:id="@+id/item_change_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_change_pwd"
+            android:text="修改密码" />
 
         <com.uu.attendance.ui.view.ItemFunctionEntryView
             android:id="@+id/item_exit"

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.hjq.toast.Toaster
 import com.uu.attendance.model.network.api.StudentApi
 import com.uu.attendance.model.network.dto.CourseDetailDto
+import com.uu.attendance.model.network.dto.UserInfoDto
 import com.uu.attendance.util.LogUtil.Companion.debug
 import java.util.Date
 
@@ -19,7 +20,9 @@ class CourseTableViewModel : ViewModel() {
     val itemHeight = MutableLiveData<Int>()
     val itemWidth = MutableLiveData<Int>()
 
-    suspend fun getCourseTable(week:Int) {
+    val userInfo = MutableLiveData<UserInfoDto>()
+
+    suspend fun getCourseTable(week: Int) {
         try {
             courseList[week] = (
                     StudentApi.getCourseTable(

@@ -12,6 +12,7 @@ import com.uu.attendance.databinding.FragmentMeBinding
 import com.uu.attendance.model.Identity
 import com.uu.attendance.model.network.api.AccountApi
 import com.uu.attendance.ui.activity.AttendanceAppealActivity
+import com.uu.attendance.ui.activity.ChangePwdActivity
 import com.uu.attendance.ui.activity.LeaveApplicationActivity
 import com.uu.attendance.ui.activity.LoginActivity
 import com.uu.attendance.ui.activity.RulesActivity
@@ -54,6 +55,12 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
             startActivity(intent)
         }
 
+        binding.itemChangePwd.setOnClickListener {
+            val intent = Intent(requireContext(), ChangePwdActivity::class.java)
+            intent.putExtra("userNo", viewModel.userInfo.value!!.no)
+            startActivity(intent)
+        }
+
         binding.itemExit.setOnClickListener {
 //            val intent = Intent(requireContext(), SuperviseDetailActivity::class.java) // debug
 //            startActivity(intent)
@@ -79,7 +86,8 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
 
         if (KVUtil.get("token", "").isNotEmpty()) {
             launch(tryBlock = {
-                AccountApi.getInfo().data!!.let {
+                viewModel.userInfo.value = AccountApi.getInfo().data!!
+                viewModel.userInfo.value!!.let {
                     debug(it)
                     binding.tvName.text = it.name
                     binding.tvXueyuan.text = it.college
@@ -101,9 +109,13 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
             Identity.STUDENT -> "学生"
             else -> "督导"
         }
-        binding.tvTerm.text = viewModel.currentSemester.value.toString()
-            .substring(0, 4) + " 年 " + viewModel.currentSemester.value.toString().substring(5) + " 学期"
-        binding.tvWeek.text = "第 ${viewModel.currentWeek.value} 周"
+        try {
+            binding.tvTerm.text = viewModel.currentSemester.value.toString()
+                .substring(0, 4) + " 年 " + viewModel.currentSemester.value.toString()
+                .substring(5) + " 学期"
+            binding.tvWeek.text = "第 ${viewModel.currentWeek.value} 周"
+        } catch (ignore: Exception) {
+        }
     }
 
 
