@@ -76,8 +76,8 @@ class SuperviseCardFragment : BaseFragment<FragmentSuperviseCardBinding>() {
                         }
                         val dto = CourseStatusDto(
                             viewModel.courseId,
-                            t.id,
-                            status
+                            status,
+                            t.studentId
                         )
                         SuperviseApi.updateCourseAttendanceStatus(dto)
                         Toaster.show(
