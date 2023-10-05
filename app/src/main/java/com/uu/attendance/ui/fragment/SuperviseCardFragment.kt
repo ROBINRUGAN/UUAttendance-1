@@ -85,15 +85,15 @@ class SuperviseCardFragment : BaseFragment<FragmentSuperviseCardBinding>() {
                                 else -> "签到"
                             }
                         )
+                        launch(tryBlock = {
+                            adapter.getNewData(1)
+                        }, catchBlock = { e ->
+                            e.printStackTrace()
+                            Toaster.show("获取学生信息失败")
+                        })
                     }, catchBlock = { e ->
                         e.printStackTrace()
                         Toaster.show("更新学生状态失败")
-                    })
-                    launch(tryBlock = {
-                        adapter.getNewData(1)
-                    }, catchBlock = { e ->
-                        e.printStackTrace()
-                        Toaster.show("获取学生信息失败")
                     })
                 }
 
