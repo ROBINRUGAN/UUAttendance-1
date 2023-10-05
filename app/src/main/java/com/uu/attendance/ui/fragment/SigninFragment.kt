@@ -3,6 +3,8 @@ package com.uu.attendance.ui.fragment
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.ViewModelProvider
@@ -39,6 +41,9 @@ class SigninFragment : BaseFragment<FragmentSigninBinding>() {
     lateinit var viewModel: SigninViewModel
     lateinit var webSocket: WebSocket
     lateinit var client: OkHttpClient
+    var webSocketConnected = false
+    val handler = Handler(Looper.getMainLooper())
+    lateinit var runnable: Runnable
 
 
     companion object {
@@ -94,6 +99,7 @@ class SigninFragment : BaseFragment<FragmentSigninBinding>() {
         val listener = object : WebSocketListener() {
             override fun onOpen(webSocket: WebSocket, response: Response) {
                 debug("onOpen")
+                webSocketConnected = true
             }
 
             override fun onMessage(webSocket: WebSocket, text: String) {
@@ -110,13 +116,21 @@ class SigninFragment : BaseFragment<FragmentSigninBinding>() {
 
             override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
                 debug("Closed: $code $reason")
+                webSocketConnected = false
+                handler.postDelayed(runnable, 3000) // 3秒后尝试重连
             }
 
             override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
                 debug("Error: ${t.message}")
+                webSocketConnected = false
+                handler.postDelayed(runnable, 3000) // 3秒后尝试重连
             }
         }
-
+        runnable = Runnable {
+            if (!webSocketConnected) { // webSocketConnected是一个布尔值，表示WebSocket是否已连接
+                webSocket = client.newWebSocket(request, listener)
+            }
+        }
         webSocket = client.newWebSocket(request, listener)
 
 
