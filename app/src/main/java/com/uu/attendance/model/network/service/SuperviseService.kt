@@ -20,8 +20,10 @@ interface SuperviseService {
 
     @GET("/courseAttendances/whoNoCheck")
     suspend fun getWhoNoCheck(
-        @Query("courseId") courseId: Int
-    ): BaseDto<SuperviseStudentDto>
+        @Query("courseId") courseId: Int,
+        @Query("returneesNumber") number: Int,
+        @Query("existingStudentId") exist: Array<Int>
+    ): BaseDto<List<SuperviseStudentDto>>
 
     @PUT("/courseAttendances/status")
     suspend fun updateCourseAttendanceStatus(

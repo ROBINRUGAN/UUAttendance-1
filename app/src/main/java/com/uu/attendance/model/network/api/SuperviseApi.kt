@@ -14,8 +14,8 @@ object SuperviseApi {
     suspend fun getCourseAttendanceList(courseId: Int) =
         superviseService.getCourseAttendanceList(courseId)
 
-    suspend fun getWhoNoCheck(courseId: Int) =
-        superviseService.getWhoNoCheck(courseId)
+    suspend fun getWhoNoCheck(courseId: Int, number: Int, exist: Array<Int>) =
+        superviseService.getWhoNoCheck(courseId, number, exist)
 
     suspend fun updateCourseAttendanceStatus(courseStatusDto: CourseStatusDto) =
         superviseService.updateCourseAttendanceStatus(courseStatusDto)

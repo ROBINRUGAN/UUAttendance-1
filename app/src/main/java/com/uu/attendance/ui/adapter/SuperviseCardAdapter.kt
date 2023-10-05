@@ -34,12 +34,14 @@ class SuperviseCardAdapter(val courseId: Int, first: MutableList<SuperviseStuden
         // todo set avatar
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    suspend fun getOneMoreData() {
-        val sb = SuperviseApi.getWhoNoCheck(courseId).data ?: return
-        list.add(sb)
-//        notifyDataSetChanged()  // 暂时使用notifyDataSetChanged，其他方法会导致卡片alpha突变
-        notifyItemInserted(list.size - 1)
+    suspend fun getNewData(number: Int) {
+        val sb =
+            SuperviseApi.getWhoNoCheck(courseId, number, list.map { it.id }.toTypedArray()).data
+                ?: return
+        sb.forEach {
+            list.add(it)
+            notifyItemInserted(list.size - 1) //要一个一个加，才能正确布局
+        }
     }
 
 }

@@ -48,8 +48,7 @@ class SuperviseCardFragment : BaseFragment<FragmentSuperviseCardBinding>() {
 
             adapter = SuperviseCardAdapter(viewModel.courseId, list)
             launch(tryBlock = {
-                adapter.getOneMoreData()
-                adapter.getOneMoreData()
+                adapter.getNewData(3)
             })
             val cardCallback = CardItemTouchHelperCallback(adapter, list)
             val touchHelper = ItemTouchHelper(cardCallback)
@@ -91,7 +90,7 @@ class SuperviseCardFragment : BaseFragment<FragmentSuperviseCardBinding>() {
                         Toaster.show("更新学生状态失败")
                     })
                     launch(tryBlock = {
-                        adapter.getOneMoreData()
+                        adapter.getNewData(1)
                     }, catchBlock = { e ->
                         e.printStackTrace()
                         Toaster.show("获取学生信息失败")
