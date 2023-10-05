@@ -137,7 +137,7 @@ class SigninFragment : BaseFragment<FragmentSigninBinding>() {
 
         viewModel.nowAttendanceDto.observe(viewLifecycleOwner) { attendanceDto ->
             if (attendanceDto == null) {
-                viewModel.destLatLng.value = null
+                setDestination(null)
                 binding.tvClassName.text = "UU考勤"
                 binding.btnSignin.text = "无签到"
                 binding.btnSignin.background = AppCompatResources.getDrawable(
@@ -270,12 +270,12 @@ class SigninFragment : BaseFragment<FragmentSigninBinding>() {
 
     private fun setDestination(latLng: LatLng?) {
         viewModel.destLatLng.value = latLng
+        // remove markers
+        aMap.clear()
         if (latLng != null) {
             aMap.addMarker(
                 MarkerOptions().position(latLng).title("签到点").snippet("DefaultMarker")
             )
-        } else {
-            //todo remove marker
         }
     }
 
