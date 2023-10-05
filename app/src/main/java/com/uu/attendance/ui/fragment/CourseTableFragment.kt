@@ -9,10 +9,12 @@ import android.view.ViewTreeObserver
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import com.hjq.toast.Toaster
 import com.uu.attendance.base.ui.BaseFragment
 import com.uu.attendance.databinding.FragmentCoursetableBinding
 import com.uu.attendance.ui.adapter.CourseTableAdapter
 import com.uu.attendance.ui.viewmodel.MainViewModel
+import com.uu.attendance.util.isOnline
 
 
 class CourseTableFragment : BaseFragment<FragmentCoursetableBinding>() {
@@ -61,6 +63,10 @@ class CourseTableFragment : BaseFragment<FragmentCoursetableBinding>() {
     }
 
     private fun initViewPager() {
+        if (!isOnline(requireContext())) {
+            Toaster.show("请连接网络后重启APP")
+            return
+        }
         viewModel.itemWidth.value = binding.vpTable.width / 7 - 5
 
         viewModel.currentWeek.observe(this@CourseTableFragment) {

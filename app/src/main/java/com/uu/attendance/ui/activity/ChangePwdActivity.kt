@@ -30,7 +30,7 @@ class ChangePwdActivity : BaseActivity<ActivityChangePwdBinding>() {
         }
         ImmersionBar.setTitleBar(this, binding.toolbar)
 
-        no = intent.getStringExtra("userNo").toString()
+        no = intent.getStringExtra("userNo") ?: "未登录"
         binding.etUsername.setText(no)
 
         binding.btnSubmit.setOnClickListener {

@@ -58,7 +58,7 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
 
         binding.itemChangePwd.setOnClickListener {
             val intent = Intent(requireContext(), ChangePwdActivity::class.java)
-            intent.putExtra("userNo", viewModel.userInfo.value!!.no)
+            intent.putExtra("userNo", viewModel.userInfo.value?.no)
             startActivity(intent)
         }
 
