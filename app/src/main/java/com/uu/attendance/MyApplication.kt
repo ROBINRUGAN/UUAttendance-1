@@ -5,6 +5,7 @@ import com.hjq.toast.ToastStrategy
 import com.hjq.toast.Toaster
 import com.hjq.toast.style.WhiteToastStyle
 import com.tencent.mmkv.MMKV
+import com.uu.attendance.util.setupDefaultCrashHandler
 
 class MyApplication : Application() {
     companion object {
@@ -17,10 +18,12 @@ class MyApplication : Application() {
 
         instance = this
 
+        setupDefaultCrashHandler()
+
         Toaster.init(this)
         Toaster.setStyle(WhiteToastStyle())
         Toaster.setStrategy(ToastStrategy(ToastStrategy.SHOW_STRATEGY_TYPE_QUEUE))
 
-        val rootDir = MMKV.initialize(this)
+        MMKV.initialize(this)
     }
 }

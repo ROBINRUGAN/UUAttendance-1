@@ -94,7 +94,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             it.printStackTrace()
             Toaster.show("获取学期信息失败")
         })
-
     }
 
     private fun switchSuperviseVisibility() {
