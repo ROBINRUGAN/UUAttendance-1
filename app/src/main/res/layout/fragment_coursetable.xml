@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.uu.attendance.ui.fragment.CourseTableViewModel" />
+            type="com.uu.attendance.ui.viewmodel.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

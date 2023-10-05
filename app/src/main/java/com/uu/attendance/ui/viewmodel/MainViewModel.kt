@@ -1,4 +1,4 @@
-package com.uu.attendance.ui.fragment
+package com.uu.attendance.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +9,7 @@ import com.uu.attendance.model.network.dto.UserInfoDto
 import com.uu.attendance.util.LogUtil.Companion.debug
 import java.util.Date
 
-class CourseTableViewModel : ViewModel() {
+class MainViewModel : ViewModel() {
     val currentWeek = MutableLiveData<Int>()
     val currentSemester = MutableLiveData<Int>()
     val currentMonth = MutableLiveData<Int>()

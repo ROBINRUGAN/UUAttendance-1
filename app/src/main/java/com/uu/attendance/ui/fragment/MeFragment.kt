@@ -16,13 +16,14 @@ import com.uu.attendance.ui.activity.ChangePwdActivity
 import com.uu.attendance.ui.activity.LeaveApplicationActivity
 import com.uu.attendance.ui.activity.LoginActivity
 import com.uu.attendance.ui.activity.RulesActivity
+import com.uu.attendance.ui.viewmodel.MainViewModel
 import com.uu.attendance.util.KVUtil
 import com.uu.attendance.util.LogUtil.Companion.debug
 
 
 class MeFragment : BaseFragment<FragmentMeBinding>() {
 
-    lateinit var viewModel: CourseTableViewModel
+    lateinit var viewModel: MainViewModel
 
     companion object {
         val instance: MeFragment by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
@@ -33,7 +34,7 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(requireActivity()).get(CourseTableViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
         binding.ivAvatar.setOnClickListener {
             val intent = Intent(requireContext(), LoginActivity::class.java)
@@ -102,9 +103,13 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
 
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onResume() {
         super.onResume()
+        setupHeaderMessage()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setupHeaderMessage() {
         binding.identity.text = when (KVUtil.get("identity", Identity.STUDENT)) {
             Identity.STUDENT -> "学生"
             else -> "督导"

@@ -25,6 +25,7 @@ import com.uu.attendance.model.CourseStatus
 import com.uu.attendance.model.network.api.StudentApi
 import com.uu.attendance.model.network.dto.NowAttendanceDto
 import com.uu.attendance.model.network.dto.SignInDto
+import com.uu.attendance.ui.viewmodel.SigninViewModel
 import com.uu.attendance.util.KVUtil
 import com.uu.attendance.util.LatLngUtil
 import com.uu.attendance.util.LogUtil.Companion.debug

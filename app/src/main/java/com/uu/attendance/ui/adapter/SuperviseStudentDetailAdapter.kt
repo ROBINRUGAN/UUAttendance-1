@@ -8,7 +8,7 @@ import com.uu.attendance.R
 import com.uu.attendance.base.ui.BaseRecyclerViewAdapter
 import com.uu.attendance.model.CourseStatus
 import com.uu.attendance.model.network.dto.SuperviseStudentDto
-import com.uu.attendance.ui.activity.SuperviseViewModel
+import com.uu.attendance.ui.viewmodel.SuperviseViewModel
 
 class SuperviseStudentDetailAdapter(val viewModel: SuperviseViewModel) :
     BaseRecyclerViewAdapter<SuperviseStudentDto>() {

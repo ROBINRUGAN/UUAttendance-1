@@ -12,12 +12,12 @@ import com.uu.attendance.model.CourseStatus
 import com.uu.attendance.model.network.api.SuperviseApi
 import com.uu.attendance.model.network.dto.CourseStatusDto
 import com.uu.attendance.model.network.dto.SuperviseStudentDto
-import com.uu.attendance.ui.activity.SuperviseViewModel
 import com.uu.attendance.ui.adapter.SuperviseCardAdapter
 import com.uu.attendance.ui.view.cardswipelayout.CardConfig
 import com.uu.attendance.ui.view.cardswipelayout.CardItemTouchHelperCallback
 import com.uu.attendance.ui.view.cardswipelayout.CardLayoutManager
 import com.uu.attendance.ui.view.cardswipelayout.OnSwipeListener
+import com.uu.attendance.ui.viewmodel.SuperviseViewModel
 
 
 class SuperviseCardFragment : BaseFragment<FragmentSuperviseCardBinding>() {

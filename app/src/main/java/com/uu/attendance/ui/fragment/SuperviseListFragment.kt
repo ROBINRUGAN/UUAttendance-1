@@ -9,8 +9,8 @@ import com.hjq.toast.Toaster
 import com.uu.attendance.base.ui.BaseFragment
 import com.uu.attendance.databinding.FragmentSuperviseListBinding
 import com.uu.attendance.model.network.api.SuperviseApi
-import com.uu.attendance.ui.activity.SuperviseViewModel
 import com.uu.attendance.ui.adapter.SuperviseStudentDetailAdapter
+import com.uu.attendance.ui.viewmodel.SuperviseViewModel
 import com.uu.attendance.util.KeyboardUtil
 
 

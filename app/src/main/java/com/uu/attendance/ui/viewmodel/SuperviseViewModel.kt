@@ -1,4 +1,4 @@
-package com.uu.attendance.ui.activity
+package com.uu.attendance.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

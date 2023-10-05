@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.uu.attendance.base.ui.BaseToolbarActivity
 import com.uu.attendance.databinding.ActivitySuperviseDetailBinding
 import com.uu.attendance.ui.adapter.ViewPagerSuperviseDetailAdapter
+import com.uu.attendance.ui.viewmodel.SuperviseViewModel
 
 class SuperviseDetailActivity : BaseToolbarActivity<ActivitySuperviseDetailBinding>() {
 

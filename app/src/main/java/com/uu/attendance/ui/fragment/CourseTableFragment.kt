@@ -9,19 +9,15 @@ import android.view.ViewTreeObserver
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
-import com.hjq.toast.Toaster
 import com.uu.attendance.base.ui.BaseFragment
 import com.uu.attendance.databinding.FragmentCoursetableBinding
-import com.uu.attendance.model.network.api.StudentApi
 import com.uu.attendance.ui.adapter.CourseTableAdapter
-import java.sql.Date
-import java.text.SimpleDateFormat
-import java.util.Locale
+import com.uu.attendance.ui.viewmodel.MainViewModel
 
 
 class CourseTableFragment : BaseFragment<FragmentCoursetableBinding>() {
 
-    private lateinit var viewModel: CourseTableViewModel
+    private lateinit var viewModel: MainViewModel
 
     companion object {
         val instance: CourseTableFragment by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
@@ -32,7 +28,7 @@ class CourseTableFragment : BaseFragment<FragmentCoursetableBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(requireActivity()).get(CourseTableViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
         binding.viewModel = viewModel
 
         binding.llSection.viewTreeObserver.addOnGlobalLayoutListener(object :
@@ -74,35 +70,15 @@ class CourseTableFragment : BaseFragment<FragmentCoursetableBinding>() {
             viewModel.currentMonth.value = date.month + 1
         }
 
-        launch(tryBlock = {
-            StudentApi.getSemesterAndSchoolOpenTime().data!!.let {
-                viewModel.currentSemester.value = it.semester.toInt()
-                val formatter = SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.CHINA)
-                viewModel.schoolOpenTime.value = Date(java.util.Calendar.getInstance().apply {
-                    time = formatter.parse(it.schoolOpenTime)!!
-                }.timeInMillis)
-                val nowDate = Date(System.currentTimeMillis())
-                val distance =
-                    (nowDate.time - viewModel.schoolOpenTime.value!!.time) / (24 * 60 * 60 * 1000L)
-                viewModel.currentWeek.value = (distance / 7).toInt() + 1
+        binding.vpTable.adapter = CourseTableAdapter(this@CourseTableFragment)
+        binding.vpTable.setCurrentItem(viewModel.currentWeek.value!! - 1, false)
+        binding.vpTable.offscreenPageLimit = 1
+        binding.vpTable.registerOnPageChangeCallback(object :
+            androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                viewModel.currentWeek.value = position + 1
             }
-
-
-            binding.vpTable.adapter = CourseTableAdapter(this@CourseTableFragment)
-            binding.vpTable.currentItem = viewModel.currentWeek.value!! - 1
-            binding.vpTable.offscreenPageLimit = 1
-            binding.vpTable.registerOnPageChangeCallback(object :
-                androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-                    viewModel.currentWeek.value = position + 1
-                }
-            })
-        }, catchBlock = {
-            it.printStackTrace()
-            Toaster.show("获取学期信息失败")
         })
-
-
     }
 }

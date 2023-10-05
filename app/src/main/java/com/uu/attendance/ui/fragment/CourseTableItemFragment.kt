@@ -18,16 +18,17 @@ import com.uu.attendance.databinding.FragmentCoursetableItemBinding
 import com.uu.attendance.model.CourseStatus
 import com.uu.attendance.model.network.dto.CourseDetailDto
 import com.uu.attendance.ui.view.CourseDetailPopup
+import com.uu.attendance.ui.viewmodel.MainViewModel
 import com.uu.attendance.util.ConvertUtil.Companion.dp
 
 class CourseTableItemFragment(private val week: Int) :
     BaseFragment<FragmentCoursetableItemBinding>() {
 
-    private lateinit var viewModel: CourseTableViewModel
+    private lateinit var viewModel: MainViewModel
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(requireActivity()).get(CourseTableViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
         binding.viewModel = viewModel
 
         binding.swipe.setOnRefreshListener { doGet() }
