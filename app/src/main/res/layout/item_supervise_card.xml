@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_corner_35">
 
-        <com.uu.attendance.ui.view.RoundImageView
+        <com.uu.attendance.ui.common.view.RoundImageView
             android:id="@+id/iv_avatar"
             android:layout_width="230dp"
             android:layout_height="230dp"

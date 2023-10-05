@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.uu.attendance.ui.viewmodel.MainViewModel" />
+            type="com.uu.attendance.ui.main.viewmodel.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

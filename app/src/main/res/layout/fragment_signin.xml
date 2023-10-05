@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.fragment.SigninFragment">
+    tools:context=".ui.signin.fragment.SigninFragment">
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -53,7 +53,7 @@
                 android:textSize="26sp"
                 android:visibility="gone" />
 
-            <com.uu.attendance.ui.view.MapContainerLayout
+            <com.uu.attendance.ui.signin.view.MapContainerLayout
                 android:id="@+id/mapContainerLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                     android:layout_width="300dp"
                     android:layout_height="300dp" />
 
-            </com.uu.attendance.ui.view.MapContainerLayout>
+            </com.uu.attendance.ui.signin.view.MapContainerLayout>
 
             <TextView
                 android:id="@+id/tv_location_hint"

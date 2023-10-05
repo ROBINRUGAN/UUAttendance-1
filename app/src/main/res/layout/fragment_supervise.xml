@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_page"
     android:orientation="vertical"
-    tools:context=".ui.fragment.SuperviseFragment">
+    tools:context=".ui.supervise.fragment.SuperviseFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe"

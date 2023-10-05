@@ -7,14 +7,14 @@
 
         <variable
             name="viewModel"
-            type="com.uu.attendance.ui.viewmodel.MainViewModel" />
+            type="com.uu.attendance.ui.main.viewmodel.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/bg_page"
-        tools:context=".ui.fragment.CourseTableFragment">
+        tools:context=".ui.coursetable.fragment.CourseTableFragment">
 
         <View
             android:layout_width="match_parent"

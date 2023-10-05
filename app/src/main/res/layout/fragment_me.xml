@@ -6,14 +6,14 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_page"
     android:orientation="vertical"
-    tools:context=".ui.fragment.MeFragment">
+    tools:context=".ui.me.fragment.MeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp">
 
-        <com.uu.attendance.ui.view.RoundImageView
+        <com.uu.attendance.ui.common.view.RoundImageView
             android:id="@+id/iv_avatar"
             android:layout_width="90dp"
             android:layout_height="90dp"
@@ -118,35 +118,35 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.uu.attendance.ui.view.ItemFunctionEntryView
+        <com.uu.attendance.ui.me.view.ItemFunctionEntryView
             android:id="@+id/item_leaveapply"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_me_leaveapply"
             android:text="请假申请" />
 
-        <com.uu.attendance.ui.view.ItemFunctionEntryView
+        <com.uu.attendance.ui.me.view.ItemFunctionEntryView
             android:id="@+id/item_appeal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_me_appeal"
             android:text="考勤申诉" />
 
-        <com.uu.attendance.ui.view.ItemFunctionEntryView
+        <com.uu.attendance.ui.me.view.ItemFunctionEntryView
             android:id="@+id/item_rule"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_me_rule"
             android:text="考勤规则" />
 
-        <com.uu.attendance.ui.view.ItemFunctionEntryView
+        <com.uu.attendance.ui.me.view.ItemFunctionEntryView
             android:id="@+id/item_change_pwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_change_pwd"
             android:text="修改密码" />
 
-        <com.uu.attendance.ui.view.ItemFunctionEntryView
+        <com.uu.attendance.ui.me.view.ItemFunctionEntryView
             android:id="@+id/item_exit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

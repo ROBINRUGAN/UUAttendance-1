@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_page"
-    tools:context=".ui.activity.AttendanceAppealActivity">
+    tools:context=".ui.me.activity.AttendanceAppealActivity">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe"
