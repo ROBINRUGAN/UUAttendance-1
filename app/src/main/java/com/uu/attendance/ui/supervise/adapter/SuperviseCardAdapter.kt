@@ -8,6 +8,7 @@ import com.uu.attendance.R
 import com.uu.attendance.base.ui.BaseRecyclerViewAdapter
 import com.uu.attendance.model.network.api.SuperviseApi
 import com.uu.attendance.model.network.dto.SuperviseStudentDto
+import com.uu.attendance.util.LogUtil.Companion.debug
 
 class SuperviseCardAdapter(val courseId: Int, first: MutableList<SuperviseStudentDto>) :
     BaseRecyclerViewAdapter<SuperviseStudentDto>() {
@@ -35,11 +36,14 @@ class SuperviseCardAdapter(val courseId: Int, first: MutableList<SuperviseStuden
     }
 
     suspend fun getNewData(number: Int) {
+        val ex = list.map { it.studentId }.toTypedArray()
+        debug(ex.joinToString())
         val sb =
-            SuperviseApi.getWhoNoCheck(courseId, number, list.map { it.id }.toTypedArray()).data
+            SuperviseApi.getWhoNoCheck(courseId, number, ex).data
                 ?: return
         sb.forEach {
             list.add(it)
+            debug(it.studentId)
             notifyItemInserted(list.size - 1) //要一个一个加，才能正确布局
         }
     }

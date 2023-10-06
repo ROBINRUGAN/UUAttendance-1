@@ -22,7 +22,7 @@ interface SuperviseService {
     suspend fun getWhoNoCheck(
         @Query("courseId") courseId: Int,
         @Query("returneesNumber") number: Int,
-        @Query("existingStudentId") exist: Array<Int>
+        @Query("existingStudentId") exist: String
     ): BaseDto<List<SuperviseStudentDto>>
 
     @PUT("/courseAttendances/status")
