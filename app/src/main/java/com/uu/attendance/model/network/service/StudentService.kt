@@ -4,6 +4,7 @@ import com.uu.attendance.base.dto.BaseDto
 import com.uu.attendance.model.network.dto.AttendanceAppealInfoDto
 import com.uu.attendance.model.network.dto.CourseDetailDto
 import com.uu.attendance.model.network.dto.LeaveApplicationInfoDto
+import com.uu.attendance.model.network.dto.NewAttendanceAppealDto
 import com.uu.attendance.model.network.dto.NewLeaveApplicationDto
 import com.uu.attendance.model.network.dto.SemesterInfoDao
 import com.uu.attendance.model.network.dto.SignInDto
@@ -34,6 +35,11 @@ interface StudentService {
     suspend fun postLeaveApplication(
         @Body body: NewLeaveApplicationDto
     ): BaseDto<Any>
+
+    @POST("attendanceAppeals")
+    suspend fun postAttendanceAppeal(
+        @Body body: NewAttendanceAppealDto
+    )
 
     @PUT("/courseAttendances/signin")
     suspend fun signIn(

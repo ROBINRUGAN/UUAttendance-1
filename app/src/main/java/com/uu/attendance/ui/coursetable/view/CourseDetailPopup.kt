@@ -9,6 +9,7 @@ import android.view.animation.TranslateAnimation
 import android.widget.TextView
 import com.uu.attendance.R
 import com.uu.attendance.model.network.dto.CourseDetailDto
+import com.uu.attendance.ui.coursetable.activity.NewAttendanceAppealActivity
 import com.uu.attendance.ui.coursetable.activity.NewLeaveApplicationActivity
 import razerdp.basepopup.BasePopupWindow
 
@@ -26,6 +27,17 @@ class CourseDetailPopup(context: Context, course: CourseDetailDto, currentWeek: 
         findViewById<TextView>(R.id.tv_week).text = "第${currentWeek}周"
         findViewById<TextView>(R.id.tv_leave_apply).setOnClickListener {
             val intent = Intent(context, NewLeaveApplicationActivity::class.java)
+            val bundle = Bundle().apply {
+                putInt("courseId", course.id)
+                putString("courseName", course.name)
+                putString("beginTime", course.beginTime)
+                putString("endTime", course.endTime)
+            }
+            intent.putExtra("bundle", bundle)
+            context.startActivity(intent)
+        }
+        findViewById<TextView>(R.id.tv_appeal).setOnClickListener {
+            val intent = Intent(context, NewAttendanceAppealActivity::class.java)
             val bundle = Bundle().apply {
                 putInt("courseId", course.id)
                 putString("courseName", course.name)

@@ -29,6 +29,9 @@
             android:name=".ui.coursetable.activity.NewLeaveApplicationActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.coursetable.activity.NewAttendanceAppealActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.me.activity.AttendanceAppealActivity"
             android:exported="false" />
         <activity
