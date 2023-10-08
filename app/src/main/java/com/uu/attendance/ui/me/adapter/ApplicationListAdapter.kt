@@ -1,12 +1,15 @@
 package com.uu.attendance.ui.me.adapter
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 import com.uu.attendance.R
 import com.uu.attendance.base.ui.BaseRecyclerViewAdapter
 import com.uu.attendance.model.network.dto.LeaveApplicationInfoDto
+import com.uu.attendance.ui.coursetable.activity.NewLeaveApplicationActivity
 
 class ApplicationListAdapter : BaseRecyclerViewAdapter<LeaveApplicationInfoDto>() {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -29,21 +32,30 @@ class ApplicationListAdapter : BaseRecyclerViewAdapter<LeaveApplicationInfoDto>(
         holder.tvName.text = "请假课程：" + list[position].courseName
         holder.tvTime.text = "请假时间：" +
                 list[position].leaveApplication.appealBeginTime + " 至 " + list[position].leaveApplication.appealEndTime
-        when (list[position].leaveApplication.status) {
-            "0" -> {
-                holder.tvStatus.text = "审核中"
-                holder.tvStatus.setTextColor(holder.tvStatus.context.getColor(R.color.pink))
-            }
+        holder.tvStatus.apply {
+            when (list[position].leaveApplication.status) {
+                "0" -> {
+                    text = "审核中"
+                    setTextColor(context.getColor(R.color.pink))
+                }
 
-            "1" -> {
-                holder.tvStatus.text = "已通过"
-                holder.tvStatus.setTextColor(holder.tvStatus.context.getColor(R.color.green))
-            }
+                "1" -> {
+                    text = "已通过"
+                    setTextColor(context.getColor(R.color.green))
+                }
 
-            "2" -> {
-                holder.tvStatus.text = "未通过"
-                holder.tvStatus.setTextColor(holder.tvStatus.context.getColor(R.color.red))
+                "2" -> {
+                    text = "未通过"
+                    setTextColor(context.getColor(R.color.red))
+                }
             }
+        }
+        holder.itemView.setOnClickListener {
+            val intent = Intent(it.context, NewLeaveApplicationActivity::class.java).apply {
+                putExtra("view", true)
+                putExtra("data", Gson().toJson(list[position]))
+            }
+            it.context.startActivity(intent)
         }
     }
 
