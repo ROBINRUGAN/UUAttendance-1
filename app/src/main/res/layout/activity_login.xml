@@ -113,6 +113,6 @@
             android:id="@+id/tv_password_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="密码：与福大教务处密码相同\n修改密码：在福大教务处进行修改" />
+            android:text="初始密码：与学号相同" />
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,8 +23,8 @@
         android:text="张三"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv_status"
+        app:layout_constraintStart_toEndOf="@id/tv_id"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView

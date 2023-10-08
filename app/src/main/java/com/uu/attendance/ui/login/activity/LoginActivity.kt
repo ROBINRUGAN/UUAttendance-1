@@ -4,11 +4,13 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.ViewTreeObserver
+import com.gyf.immersionbar.ImmersionBar
 import com.hjq.toast.Toaster
 import com.uu.attendance.base.ui.BaseToolbarActivity
 import com.uu.attendance.databinding.ActivityLoginBinding
 import com.uu.attendance.model.network.api.AccountApi
 import com.uu.attendance.ui.main.activity.MainActivity
+import com.uu.attendance.util.ConvertUtil.Companion.dp
 import com.uu.attendance.util.KVUtil
 import com.uu.attendance.util.LogUtil.Companion.debug
 
@@ -19,6 +21,7 @@ class LoginActivity : BaseToolbarActivity<ActivityLoginBinding>() {
             setCancelable(false)
         }
     }
+
     override fun getToolbarTitle(): String {
         return "登录"
     }
@@ -45,12 +48,15 @@ class LoginActivity : BaseToolbarActivity<ActivityLoginBinding>() {
                     height = (binding.ivBg.height * 0.055).toInt()
                     binding.spacePasswordButton.layoutParams = this
                 }
+                binding.llPwdHint.layoutParams.apply {
+                    height = 50.dp + ImmersionBar.getNavigationBarHeight(this@LoginActivity)
+                }
                 binding.ivBg.viewTreeObserver.removeOnGlobalLayoutListener(this)
             }
         })
 
         binding.btnLogin.setOnClickListener {
-            launch (tryBlock = {
+            launch(tryBlock = {
                 dialog.show()
                 val username = binding.etUsername.text.toString()
                 val password = binding.etPassword.text.toString()
