@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-//    id 'kotlin-kapt'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -74,7 +74,7 @@ dependencies {
 //    implementation 'org.java-websocket:Java-WebSocket:1.5.3'
 
     // ui
-    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'com.google.android.material:material:1.10.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.github.DylanCaiCoding.ViewBindingKTX:viewbinding-ktx:2.1.0'
     implementation 'com.github.DylanCaiCoding.ViewBindingKTX:viewbinding-base:2.1.0'
@@ -83,6 +83,7 @@ dependencies {
     implementation 'com.geyifeng.immersionbar:immersionbar:3.2.2'
     implementation 'com.geyifeng.immersionbar:immersionbar-ktx:3.2.2'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation 'com.github.lihangleo2:ShadowLayout:3.3.3'
     //implementation 'me.hiten:jkcardlayout:0.1.1'
 
     // data

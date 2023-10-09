@@ -4,16 +4,16 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
-import android.widget.RelativeLayout
+import androidx.cardview.widget.CardView
 
 
 /**
  * 解决地图在主scrollview中滑动冲突的问题
  */
-class MapContainerLayout : RelativeLayout {
+class MapContainerLayout : CardView {
 
-    constructor(context: Context?) : super(context)
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
+    constructor(context: Context) : super(context)
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
 
     override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
