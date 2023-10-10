@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
 import android.widget.TextView
+import com.hjq.toast.Toaster
 import com.uu.attendance.R
+import com.uu.attendance.model.CourseStatus
 import com.uu.attendance.model.network.dto.CourseDetailDto
 import com.uu.attendance.ui.coursetable.activity.NewAttendanceAppealActivity
 import com.uu.attendance.ui.coursetable.activity.NewLeaveApplicationActivity
@@ -26,26 +28,42 @@ class CourseDetailPopup(context: Context, course: CourseDetailDto, currentWeek: 
             course.sectionStart.toString() + "-" + course.sectionEnd.toString() + "节"
         findViewById<TextView>(R.id.tv_week).text = "第${currentWeek}周"
         findViewById<TextView>(R.id.tv_leave_apply).setOnClickListener {
-            val intent = Intent(context, NewLeaveApplicationActivity::class.java)
-            val bundle = Bundle().apply {
-                putInt("courseId", course.id)
-                putString("courseName", course.name)
-                putString("beginTime", course.beginTime)
-                putString("endTime", course.endTime)
+            when (course.status) {
+                CourseStatus.UNCHECKED -> {
+                    val intent = Intent(context, NewLeaveApplicationActivity::class.java)
+                    val bundle = Bundle().apply {
+                        putInt("courseId", course.id)
+                        putString("courseName", course.name)
+                        putString("beginTime", course.beginTime)
+                        putString("endTime", course.endTime)
+                    }
+                    intent.putExtra("bundle", bundle)
+                    context.startActivity(intent)
+                }
+
+                CourseStatus.LEAVE -> {
+                    Toaster.show("您已请假")
+                }
+
+                else -> {
+                    Toaster.show("只有未签到情况下可以请假")
+                }
             }
-            intent.putExtra("bundle", bundle)
-            context.startActivity(intent)
         }
         findViewById<TextView>(R.id.tv_appeal).setOnClickListener {
-            val intent = Intent(context, NewAttendanceAppealActivity::class.java)
-            val bundle = Bundle().apply {
-                putInt("courseId", course.id)
-                putString("courseName", course.name)
-                putString("beginTime", course.beginTime)
-                putString("endTime", course.endTime)
+            if (course.status == CourseStatus.ABSENT) {
+                val intent = Intent(context, NewAttendanceAppealActivity::class.java)
+                val bundle = Bundle().apply {
+                    putInt("courseId", course.id)
+                    putString("courseName", course.name)
+                    putString("beginTime", course.beginTime)
+                    putString("endTime", course.endTime)
+                }
+                intent.putExtra("bundle", bundle)
+                context.startActivity(intent)
+            } else {
+                Toaster.show("您未缺勤，无需申诉")
             }
-            intent.putExtra("bundle", bundle)
-            context.startActivity(intent)
         }
     }
 
