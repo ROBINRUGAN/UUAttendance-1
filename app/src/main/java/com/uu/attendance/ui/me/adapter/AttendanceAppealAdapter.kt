@@ -5,7 +5,6 @@ import android.content.Intent
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
 import com.uu.attendance.R
 import com.uu.attendance.base.ui.BaseRecyclerViewAdapter
 import com.uu.attendance.model.network.dto.AttendanceAppealInfoDto
@@ -47,8 +46,7 @@ class AttendanceAppealAdapter : BaseRecyclerViewAdapter<AttendanceAppealInfoDto>
         }
         holder.itemView.setOnClickListener {
             val intent = Intent(it.context, NewAttendanceAppealActivity::class.java).apply {
-                putExtra("view", true)
-                putExtra("data", Gson().toJson(list[position]))
+                putExtra("appealId", list[position].attendanceAppeal.id)
             }
             it.context.startActivity(intent)
         }

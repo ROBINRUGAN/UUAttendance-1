@@ -5,7 +5,6 @@ import android.content.Intent
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
 import com.uu.attendance.R
 import com.uu.attendance.base.ui.BaseRecyclerViewAdapter
 import com.uu.attendance.model.network.dto.LeaveApplicationInfoDto
@@ -52,8 +51,7 @@ class ApplicationListAdapter : BaseRecyclerViewAdapter<LeaveApplicationInfoDto>(
         }
         holder.itemView.setOnClickListener {
             val intent = Intent(it.context, NewLeaveApplicationActivity::class.java).apply {
-                putExtra("view", true)
-                putExtra("data", Gson().toJson(list[position]))
+                putExtra("leaveId", list[position].leaveApplication.id)
             }
             it.context.startActivity(intent)
         }

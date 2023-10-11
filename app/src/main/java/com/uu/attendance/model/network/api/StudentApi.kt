@@ -1,10 +1,9 @@
 package com.uu.attendance.model.network.api
 
 import com.uu.attendance.model.network.RetrofitProvider
-import com.uu.attendance.model.network.dto.NewAttendanceAppealDto
-import com.uu.attendance.model.network.dto.NewLeaveApplicationDto
 import com.uu.attendance.model.network.dto.SignInDto
 import com.uu.attendance.model.network.service.StudentService
+import okhttp3.RequestBody
 
 object StudentApi {
     private val studentService by lazy {
@@ -15,13 +14,17 @@ object StudentApi {
 
     suspend fun getLeaveApplicationList() = studentService.getLeaveApplicationList()
 
+    suspend fun getLeaveApplicationDetail(leaveId: Int) = studentService.getLeaveApplicationDetail(leaveId)
+
     suspend fun getAttendanceAppealList() = studentService.getAttendanceAppealList()
+
+    suspend fun getAttendanceAppealDetail(appealId: Int) = studentService.getAttendanceAppealDetail(appealId)
 
     suspend fun getSemesterAndSchoolOpenTime() = studentService.getSemesterAndSchoolOpenTime()
 
-    suspend fun postLeaveApplication(body: NewLeaveApplicationDto) = studentService.postLeaveApplication(body)
+    suspend fun postLeaveApplication(body: RequestBody) = studentService.postLeaveApplication(body)
 
-    suspend fun postAttendanceAppeal(body: NewAttendanceAppealDto) = studentService.postAttendanceAppeal(body)
+    suspend fun postAttendanceAppeal(body: RequestBody) = studentService.postAttendanceAppeal(body)
 
     suspend fun signIn(body: SignInDto) = studentService.signIn(body)
 }

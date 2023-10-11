@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
+//    id 'kotlin-kapt'
 }
 
 android {
@@ -84,6 +84,8 @@ dependencies {
     implementation 'com.geyifeng.immersionbar:immersionbar-ktx:3.2.2'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'com.github.lihangleo2:ShadowLayout:3.3.3'
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+    implementation 'io.github.FlyJingFish.OpenImage:OpenImageGlideLib:2.1.6'
     //implementation 'me.hiten:jkcardlayout:0.1.1'
 
     // data
