@@ -3,6 +3,12 @@
 ## 项目功能介绍
 
 - 本项目是一个跨平台考勤系统，主要提供课前请假、教师审批、考勤申诉、督导点名、定位签到、指定督导等功能，分为学生端/督导端，和教师端。学生/督导端实现课表查看、课前请假、考勤申诉、定位签到、督导操作等功能，采用安卓原生技术，以Kotlin为主要开发语言进行开发。
+- 教师端仓库地址：https://github.com/ROBINRUGAN/uu-attendance
+- 后端仓库地址：https://github.com/flying-pig-z/uuAttendance
+
+## 工作流程图
+
+[![img](https://user-images.githubusercontent.com/117554874/266471478-7116ec22-125f-4689-8ab5-fb33f2a9fb28.png)](https://user-images.githubusercontent.com/117554874/266471478-7116ec22-125f-4689-8ab5-fb33f2a9fb28.png)
 
 ## 技术栈与项目亮点
 
